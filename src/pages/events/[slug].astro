@@ -1,0 +1,283 @@
+---
+import type { GetStaticPaths } from "astro";
+
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { countryName, EVENT_KIND_LABELS, loadArchive, WORK_TYPE_LABELS } from "../../lib/atlas";
+
+export const getStaticPaths = (async () => {
+  const { events, works } = await loadArchive();
+  return events.map((event) => ({
+    params: { slug: event.entry.id },
+    props: {
+      event,
+      works: works
+        .filter((work) => work.event?.id === event.entry.id)
+        .sort((a, b) => b.entry.data.year - a.entry.data.year),
+    },
+  }));
+}) satisfies GetStaticPaths;
+
+const { event, works } = Astro.props;
+const data = event.entry.data;
+
+const years = Array.from(new Set(works.map((w) => w.entry.data.year))).sort((a, b) => b - a);
+const kindLabel = EVENT_KIND_LABELS[data.kind] ?? data.kind;
+const description =
+  data.description ??
+  `${data.name} — ${kindLabel} in ${[data.city, countryName(data.country)].filter(Boolean).join(", ")}.`;
+---
+
+<BaseLayout title={data.name} description={description}>
+  <article class="page event" data-pagefind-body>
+    <header class="event-head">
+      <p class="event-top">
+        <span class="plate">{event.plate}</span>
+        <span class="tag">{kindLabel}</span>
+        {data.status !== "active" && <span class="event-status">{data.status}</span>}
+      </p>
+
+      <h1>{data.name}</h1>
+
+      <p class="event-where">
+        {[data.city, countryName(data.country)].filter(Boolean).join(", ")}
+        {data.first_year && <span> · running since {data.first_year}</span>}
+      </p>
+
+      {data.description && <p class="prose event-desc">{data.description}</p>}
+
+      <dl class="event-facts">
+        <div>
+          <dt>Indexed works</dt>
+          <dd>{works.length}</dd>
+        </div>
+        {
+          years.length > 0 && (
+            <div>
+              <dt>Years covered</dt>
+              <dd>{years.length === 1 ? years[0] : `${years[years.length - 1]}–${years[0]}`}</dd>
+            </div>
+          )
+        }
+        {
+          data.languages && data.languages.length > 0 && (
+            <div>
+              <dt>Languages</dt>
+              <dd>{data.languages.map((l) => l.toUpperCase()).join(" · ")}</dd>
+            </div>
+          )
+        }
+      </dl>
+
+      <p class="event-actions">
+        {
+          data.website && (
+            <a class="event-link" href={data.website} rel="noopener external">
+              Official site
+            </a>
+          )
+        }
+        {
+          data.cfp_url && (
+            <a class="event-link" href={data.cfp_url} rel="noopener external">
+              Call for papers
+            </a>
+          )
+        }
+        {
+          works.length > 0 && (
+            <a class="event-link" href={`/works/?event=${event.entry.id}`}>
+              Filter the works index
+            </a>
+          )
+        }
+      </p>
+    </header>
+
+    <div class="meridian"></div>
+
+    <section class="event-works">
+      <h2 class="label">Works from this event</h2>
+      {
+        works.length === 0 ? (
+          <p class="event-empty">
+            Nothing indexed from this event yet. If you spoke here or remember a
+            talk that should be recorded, <a href="/contribute/">add it</a>.
+          </p>
+        ) : (
+          <ol class="plate-list">
+            {works.map((work) => (
+              <li class="work-row">
+                <span class="plate" aria-hidden="true">
+                  {work.plate}
+                </span>
+                <span class="work-row-body">
+                  <a href={`/works/${work.entry.id}/`}>{work.entry.data.title}</a>
+                  <span class="work-row-meta">
+                    {[
+                      work.authors.map((a) => a.data.name).join(", "),
+                      WORK_TYPE_LABELS[work.entry.data.type],
+                    ]
+                      .filter(Boolean)
+                      .join(" · ")}
+                  </span>
+                </span>
+                <span class="work-row-year">{work.entry.data.year}</span>
+              </li>
+            ))}
+          </ol>
+        )
+      }
+    </section>
+
+    <footer class="event-foot">
+      <a href="/events/">← The event landscape</a>
+      <a href="/about/#removal">Request a correction</a>
+    </footer>
+  </article>
+</BaseLayout>
+
+<style>
+  .event {
+    max-inline-size: 52rem;
+  }
+
+  .event-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-block-end: var(--space-sm);
+  }
+
+  .event-status {
+    font-family: var(--face-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-plate);
+    color: var(--ink-faint);
+    border: var(--hairline) dashed var(--rule-strong);
+    border-radius: var(--radius);
+    padding: 0.05em 0.4em;
+  }
+
+  .event-where {
+    font-family: var(--face-mono);
+    font-size: var(--text-sm);
+    color: var(--ink-muted);
+    margin-block-end: var(--space-md);
+  }
+
+  .event-desc {
+    font-size: var(--text-lg);
+  }
+
+  .event-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md) var(--space-xl);
+    margin-block: var(--space-lg);
+  }
+
+  .event-facts dt {
+    font-family: var(--face-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    color: var(--ink-faint);
+  }
+
+  .event-facts dd {
+    margin: 0;
+    font-family: var(--face-display);
+    font-size: var(--text-xl);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .event-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .event-link {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 2.75rem;
+    font-family: var(--face-mono);
+    font-size: var(--text-sm);
+    padding: var(--space-xs) var(--space-md);
+    border: var(--hairline) solid var(--rule-strong);
+    border-radius: var(--radius);
+    text-decoration: none;
+  }
+
+  .event-link:hover {
+    border-color: var(--action);
+  }
+
+  .event-works {
+    margin-block-start: var(--space-lg);
+  }
+
+  .plate-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-block-end: var(--hairline) solid var(--rule);
+  }
+
+  .work-row {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr auto;
+    gap: var(--space-sm);
+    align-items: baseline;
+    padding-block: var(--space-sm);
+    border-block-start: var(--hairline) solid var(--rule);
+  }
+
+  .work-row-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    min-inline-size: 0;
+  }
+
+  .work-row-meta {
+    font-size: var(--text-sm);
+    color: var(--ink-muted);
+  }
+
+  .work-row-year {
+    font-family: var(--face-mono);
+    font-size: var(--text-sm);
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-faint);
+  }
+
+  .event-empty {
+    color: var(--ink-muted);
+    padding-block: var(--space-md);
+    max-inline-size: var(--measure);
+  }
+
+  .event-foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    margin-block-start: var(--space-xl);
+    padding-block-start: var(--space-md);
+    border-block-start: var(--hairline) solid var(--rule);
+    font-size: var(--text-sm);
+  }
+
+  @media (max-width: 32rem) {
+    .work-row {
+      grid-template-columns: 1fr auto;
+    }
+
+    .work-row .plate {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

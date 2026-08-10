@@ -1,0 +1,12 @@
+# UNVERIFIED SEED — added by Claude, 2026-08-09.
+# Fact-check name, country, city, first_year, and website before public launch.
+slug: cybertalents-ctf
+name: CyberTalents CTF
+kind: ctf
+country: EG
+website: https://cybertalents.com
+status: active
+languages: [en, ar]
+description: >
+  Recurring regional capture-the-flag competitions run on the CyberTalents
+  platform, including national and Africa-wide rounds.

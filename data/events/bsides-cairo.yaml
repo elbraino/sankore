@@ -1,0 +1,11 @@
+# UNVERIFIED SEED — added by Claude, 2026-08-09.
+# Fact-check name, country, city, first_year, and website before public launch.
+slug: bsides-cairo
+name: BSides Cairo
+kind: bsides
+country: EG
+city: Cairo
+status: active
+languages: [en, ar]
+description: >
+  Community-run Security BSides chapter in Cairo.

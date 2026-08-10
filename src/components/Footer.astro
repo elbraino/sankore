@@ -1,0 +1,121 @@
+---
+import { SITE_NAME } from "../../site.config.ts";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer on-ink">
+  <div class="meridian"></div>
+  <div class="page footer-inner">
+    <div class="footer-block">
+      <p class="footer-name">{SITE_NAME}</p>
+      <p class="footer-note">
+        An archive, not a ranking. No scores, no leaderboards, no rankings — by
+        design.
+      </p>
+    </div>
+
+    {/*
+      Removal must be one click from every page, including every person page
+      (CLAUDE.md rule 3). It is the first link in the footer for that reason.
+    */}
+    <nav class="footer-block" aria-label="Governance">
+      <p class="footer-heading">Your entry</p>
+      <ul>
+        <li><a href="/about/#removal">Remove or correct your entry</a></li>
+        <li><a href="/contribute/#claim">Claim your profile</a></li>
+        <li><a href="/about/#consent">Consent model</a></li>
+      </ul>
+    </nav>
+
+    <nav class="footer-block" aria-label="Project">
+      <p class="footer-heading">Project</p>
+      <ul>
+        <li><a href="/about/">About &amp; governance</a></li>
+        <li><a href="/contribute/">Contribute a work</a></li>
+        <li><a href="/events/">Event landscape</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="page footer-legal">
+    <p>Data: CC BY 4.0 · Code: MIT · {year}</p>
+    <p class="footer-plate">Takedown requests are honoured without debate.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--ink);
+    color: var(--paper);
+    margin-block-start: var(--space-2xl);
+  }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: var(--space-lg);
+    padding-block: var(--space-xl) var(--space-lg);
+  }
+
+  .footer-name {
+    font-family: var(--face-display);
+    font-weight: 700;
+    font-size: var(--text-lg);
+    margin-block-end: var(--space-xs);
+  }
+
+  .footer-note {
+    color: rgb(237 231 219 / 70%);
+    font-size: var(--text-sm);
+    max-inline-size: 28ch;
+    margin: 0;
+  }
+
+  .footer-heading {
+    font-family: var(--face-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    color: var(--gold);
+    margin-block-end: var(--space-xs);
+  }
+
+  .footer-block ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-2xs);
+  }
+
+  .footer-block a {
+    color: var(--paper);
+    font-size: var(--text-sm);
+    text-decoration-color: rgb(237 231 219 / 40%);
+    /* WCAG 2.5.8 — standalone links in a list, not inline in a sentence. */
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 1.5rem;
+  }
+
+  .footer-block a:hover {
+    color: var(--gold);
+  }
+
+  .footer-legal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-xs);
+    padding-block: var(--space-md) var(--space-lg);
+    border-block-start: var(--hairline) solid rgb(237 231 219 / 15%);
+  }
+
+  .footer-legal p {
+    margin: 0;
+    font-family: var(--face-mono);
+    font-size: var(--text-xs);
+    color: rgb(237 231 219 / 60%);
+  }
+</style>

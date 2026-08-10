@@ -1,0 +1,204 @@
+---
+import { SITE_NAME } from "../../site.config.ts";
+
+const path = Astro.url.pathname;
+const nav = [
+  { href: "/works/", label: "Works" },
+  { href: "/people/", label: "People" },
+  { href: "/events/", label: "Events" },
+  { href: "/contribute/", label: "Contribute" },
+  { href: "/about/", label: "About" },
+];
+
+const isCurrent = (href: string) => path === href || path.startsWith(href);
+---
+
+<header class="site-header on-ink">
+  <div class="page header-inner">
+    <a class="wordmark" href="/">
+      <span class="wordmark-name">{SITE_NAME}</span>
+      <span class="wordmark-sub">Security research index</span>
+    </a>
+
+    <nav aria-label="Primary">
+      <ul>
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    {/*
+      Search is a plain GET form: it works with JavaScript disabled and before
+      Pagefind's bundle loads. /search/ reads ?q= and runs the query.
+    */}
+    <form class="site-search" role="search" action="/search/" method="get">
+      <label class="visually-hidden" for="site-search-input">Search the archive</label>
+      <input
+        id="site-search-input"
+        type="search"
+        name="q"
+        placeholder="Search…"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <button type="submit">
+        <span class="visually-hidden">Search</span>
+        <svg aria-hidden="true" viewBox="0 0 20 20" width="16" height="16">
+          <circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" stroke-width="2"
+          ></circle>
+          <line
+            x1="12.8"
+            y1="12.8"
+            x2="17.5"
+            y2="17.5"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"></line>
+        </svg>
+      </button>
+    </form>
+  </div>
+  <div class="meridian"></div>
+</header>
+
+<style>
+  .site-header {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .header-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm) var(--space-lg);
+    padding-block: var(--space-sm);
+  }
+
+  .wordmark {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--paper);
+    margin-inline-end: auto;
+  }
+
+  .wordmark-name {
+    font-family: var(--face-display);
+    font-weight: 700;
+    font-size: var(--text-xl);
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+
+  .wordmark-sub {
+    font-family: var(--face-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.85;
+  }
+
+  nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav a {
+    color: var(--paper);
+    font-size: var(--text-sm);
+    text-decoration: none;
+    border-block-end: 2px solid transparent;
+    /* WCAG 2.5.8: nav links are standalone controls, so the inline-text
+       exception does not cover them — they need a 24px minimum target. */
+    display: flex;
+    align-items: center;
+    min-block-size: 1.5rem;
+    padding-block: var(--space-2xs);
+  }
+
+  nav a:hover {
+    color: var(--gold);
+  }
+
+  /* Current section gets the meridian gold underline, not a colour swap —
+     colour alone is never the only signal. */
+  nav a[aria-current="page"] {
+    border-block-end-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .site-search {
+    display: flex;
+    align-items: stretch;
+    border: var(--hairline) solid rgb(237 231 219 / 35%);
+    border-radius: var(--radius);
+  }
+
+  .site-search:focus-within {
+    border-color: var(--gold);
+  }
+
+  .site-search input {
+    background: transparent;
+    border: 0;
+    color: var(--paper);
+    font-family: var(--face-body);
+    font-size: var(--text-sm);
+    padding: var(--space-2xs) var(--space-xs);
+    inline-size: 9rem;
+    min-inline-size: 0;
+  }
+
+  .site-search input::placeholder {
+    color: rgb(237 231 219 / 55%);
+  }
+
+  .site-search button {
+    background: transparent;
+    border: 0;
+    color: var(--paper);
+    cursor: pointer;
+    padding-inline: var(--space-xs);
+    display: grid;
+    place-items: center;
+  }
+
+  .site-search button:hover {
+    color: var(--gold);
+  }
+
+  /* 360px: the wordmark keeps its line, nav wraps beneath, search goes full
+     width rather than shrinking to an unusable box. */
+  @media (max-width: 34rem) {
+    .header-inner {
+      gap: var(--space-xs) var(--space-md);
+    }
+
+    .site-search {
+      inline-size: 100%;
+      order: 3;
+    }
+
+    .site-search input {
+      inline-size: 100%;
+    }
+
+    nav {
+      order: 4;
+      inline-size: 100%;
+    }
+  }
+</style>

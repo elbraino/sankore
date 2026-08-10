@@ -1,0 +1,26 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Not found" description="This page is not in the index.">
+  <div class="page notfound">
+    <p class="label">404 · off the plate</p>
+    <h1>This page is not in the index</h1>
+    <p class="prose">
+      The entry may have been removed at the researcher's request — that happens
+      here, by design, and we do not leave a note explaining who asked.
+    </p>
+    <p class="prose">
+      Otherwise, try the <a href="/works/">works index</a>, the
+      <a href="/people/">people index</a>, the <a href="/events/">event landscape</a>,
+      or <a href="/search/">search the archive</a>.
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  .notfound {
+    max-inline-size: 44rem;
+    padding-block: var(--space-xl);
+  }
+</style>

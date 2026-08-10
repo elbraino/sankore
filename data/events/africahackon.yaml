@@ -1,0 +1,14 @@
+# UNVERIFIED SEED — added by Claude, 2026-08-09.
+# Fact-check name, country, city, first_year, and website before public launch.
+slug: africahackon
+name: AfricaHackon
+kind: conference
+country: KE
+city: Nairobi
+website: https://africahackon.com
+first_year: 2012
+status: active
+languages: [en, sw]
+description: >
+  Kenya's community-driven offensive security conference and one of the
+  longest-running technical security events in East Africa.

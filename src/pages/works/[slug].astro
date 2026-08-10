@@ -1,0 +1,251 @@
+---
+import type { GetStaticPaths } from "astro";
+
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { countryName, loadArchive, WORK_TYPE_LABELS } from "../../lib/atlas";
+
+export const getStaticPaths = (async () => {
+  const { works } = await loadArchive();
+  return works.map((work) => ({ params: { slug: work.entry.id }, props: { work } }));
+}) satisfies GetStaticPaths;
+
+const { work } = Astro.props;
+const data = work.entry.data;
+
+const LINK_LABELS: Record<string, string> = {
+  video: "Watch the recording",
+  slides: "Slides",
+  code: "Source code",
+  paper: "Paper",
+  advisory: "Advisory",
+  archive: "Archived copy",
+};
+
+const links = Object.entries(data.links ?? {}).filter(([, href]) => Boolean(href)) as [
+  string,
+  string,
+][];
+
+const typeLabel = WORK_TYPE_LABELS[data.type] ?? data.type;
+const description = data.abstract?.slice(0, 200) ?? `${typeLabel} (${data.year}) indexed in the archive.`;
+---
+
+<BaseLayout title={data.title} description={description}>
+  <article class="page work" data-pagefind-body>
+    <header class="work-head">
+      <p class="work-plate">
+        <span class="plate">{work.plate}</span>
+        <span class="tag">{typeLabel}</span>
+        <span class="work-year">{data.year}</span>
+      </p>
+
+      <h1>{data.title}</h1>
+
+      <p class="work-byline">
+        {
+          work.authors.map((author, i) => (
+            <>
+              {i > 0 && <span aria-hidden="true"> · </span>}
+              <a href={`/people/${author.id}/`}>{author.data.name}</a>
+            </>
+          ))
+        }
+      </p>
+
+      <dl class="work-facts">
+        {
+          work.event && (
+            <div>
+              <dt>Event</dt>
+              <dd>
+                <a href={`/events/${work.event.id}/`}>{work.event.data.name}</a>
+              </dd>
+            </div>
+          )
+        }
+        <div>
+          <dt>Region</dt>
+          <dd>{countryName(work.country)}</dd>
+        </div>
+        {
+          data.language && (
+            <div>
+              <dt>Language</dt>
+              <dd>{data.language.toUpperCase()}</dd>
+            </div>
+          )
+        }
+        {
+          data.cve_ids && data.cve_ids.length > 0 && (
+            <div>
+              <dt>CVE</dt>
+              <dd class="work-cves">
+                {data.cve_ids.map((id) => (
+                  <code>{id}</code>
+                ))}
+              </dd>
+            </div>
+          )
+        }
+      </dl>
+    </header>
+
+    <div class="meridian"></div>
+
+    {
+      data.abstract && (
+        <section class="work-abstract prose">
+          <h2 class="visually-hidden">Abstract</h2>
+          <p>{data.abstract}</p>
+        </section>
+      )
+    }
+
+    {
+      links.length > 0 && (
+        <section class="work-links">
+          <h2 class="label">Sources</h2>
+          <ul>
+            {links.map(([kind, href]) => (
+              <li>
+                <a href={href} rel="noopener external">
+                  {LINK_LABELS[kind] ?? kind}
+                </a>
+                <span class="work-link-host">{new URL(href).hostname.replace(/^www\./, "")}</span>
+              </li>
+            ))}
+          </ul>
+          {!data.links?.archive && (
+            <p class="work-archive-note">
+              No archived mirror recorded yet. Regional conference sites go dark
+              often — <a href="/contribute/">adding a Wayback link</a> keeps this
+              entry usable.
+            </p>
+          )}
+        </section>
+      )
+    }
+
+    {
+      data.tags && data.tags.length > 0 && (
+        <section class="work-tags">
+          <h2 class="label">Tags</h2>
+          <ul class="tag-list">
+            {data.tags.map((tag) => (
+              <li class="tag">{tag}</li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <footer class="work-foot">
+      <a href="/works/">← All works</a>
+      <a href="/about/#removal">Request a correction or removal</a>
+    </footer>
+  </article>
+</BaseLayout>
+
+<style>
+  .work {
+    max-inline-size: 52rem;
+  }
+
+  .work-plate {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-block-end: var(--space-sm);
+  }
+
+  .work-year {
+    font-family: var(--face-mono);
+    font-size: var(--text-sm);
+    color: var(--ink-faint);
+  }
+
+  .work-byline {
+    font-size: var(--text-lg);
+    margin-block-end: var(--space-lg);
+  }
+
+  .work-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md) var(--space-xl);
+    margin: 0 0 var(--space-lg);
+  }
+
+  .work-facts div {
+    min-inline-size: 0;
+  }
+
+  .work-facts dt {
+    font-family: var(--face-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    color: var(--ink-faint);
+  }
+
+  .work-facts dd {
+    margin: var(--space-2xs) 0 0;
+    font-size: var(--text-sm);
+  }
+
+  .work-cves {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .work-abstract {
+    margin-block: var(--space-lg);
+    font-size: var(--text-lg);
+  }
+
+  .work-links ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: var(--space-xs);
+  }
+
+  .work-links li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-xs);
+    padding-block: var(--space-xs);
+    border-block-start: var(--hairline) solid var(--rule);
+  }
+
+  .work-link-host {
+    font-family: var(--face-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-faint);
+  }
+
+  .work-archive-note {
+    margin-block-start: var(--space-md);
+    font-size: var(--text-sm);
+    color: var(--ink-muted);
+    border-inline-start: 2px solid var(--gold-rule);
+    padding-inline-start: var(--space-sm);
+  }
+
+  .work-tags {
+    margin-block-start: var(--space-lg);
+  }
+
+  .work-foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    margin-block-start: var(--space-xl);
+    padding-block-start: var(--space-md);
+    border-block-start: var(--hairline) solid var(--rule);
+    font-size: var(--text-sm);
+  }
+</style>

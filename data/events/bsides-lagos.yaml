@@ -1,0 +1,11 @@
+# UNVERIFIED SEED — added by Claude, 2026-08-09.
+# Fact-check name, country, city, first_year, and website before public launch.
+slug: bsides-lagos
+name: BSides Lagos
+kind: bsides
+country: NG
+city: Lagos
+status: active
+languages: [en]
+description: >
+  Security BSides chapter serving Nigeria's security community.

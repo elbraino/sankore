@@ -1,0 +1,140 @@
+---
+import FilterBar, { type FilterGroup } from "../../components/FilterBar.astro";
+import IndexPlate from "../../components/IndexPlate.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { countryName, focusLabel, loadArchive } from "../../lib/atlas";
+
+const { people } = await loadArchive();
+
+const sorted = people
+  .slice()
+  .sort((a, b) => a.entry.data.name.localeCompare(b.entry.data.name));
+
+function tally(values: string[]): Map<string, number> {
+  const counts = new Map<string, number>();
+  for (const value of values) counts.set(value, (counts.get(value) ?? 0) + 1);
+  return counts;
+}
+
+/*
+ * Focus areas are only ever surfaced for CLAIMED profiles.
+ *
+ * CLAUDE.md rule 1 is exhaustive about what an unclaimed entry renders: "display
+ * name, country (optional), and list of linked works". A focus area is an
+ * assertion about a person — usually made by whoever created the stub, not by
+ * them — so publishing it without a claim is exactly the profiling the consent
+ * model exists to prevent. It is therefore excluded from the row meta AND from
+ * the filter tally, so it cannot leak back via a filter that reveals which
+ * unclaimed people were tagged with what.
+ */
+const claimedPeople = sorted.filter((p) => p.entry.data.claimed);
+
+// CLAUDE.md: claimed status is deliberately NOT a filter. Filtering by it
+// would turn the consent model into a ranking signal — unclaimed researchers
+// are not a lesser tier of the archive.
+const groups: FilterGroup[] = [
+  {
+    key: "country",
+    label: "Country",
+    options: Array.from(tally(sorted.map((p) => p.country)).entries())
+      .map(([value, count]) => ({ value, label: countryName(value), count }))
+      .sort((a, b) => a.label.localeCompare(b.label)),
+  },
+  {
+    key: "focus",
+    label: "Focus area",
+    options: Array.from(tally(claimedPeople.flatMap((p) => p.entry.data.focus ?? [])).entries())
+      .map(([value, count]) => ({ value, label: focusLabel(value), count }))
+      .sort((a, b) => a.label.localeCompare(b.label)),
+  },
+];
+
+const description =
+  "Researchers whose work is indexed in the archive. Profiles are opt-in: unclaimed entries show a name and linked works only.";
+---
+
+<BaseLayout title="People" description={description}>
+  <div class="page">
+    <header class="index-head">
+      <p class="label">Index of people</p>
+      <h1>People</h1>
+      <p class="prose lede">
+        Researchers behind the indexed work. Person entries are opt-in — an
+        unclaimed entry shows a name, an optional country, and linked works,
+        nothing more. Nobody is ranked, scored, or ordered by output.
+      </p>
+    </header>
+
+    <FilterBar groups={groups} noun="people" total={sorted.length} />
+
+    {
+      sorted.length === 0 ? (
+        <p class="empty">No people indexed yet.</p>
+      ) : (
+        <ol class="plate-list" data-filter-list data-pagefind-ignore>
+          {sorted.map((person) => (
+            <IndexPlate
+              plate={person.plate}
+              href={`/people/${person.entry.id}/`}
+              title={person.entry.data.name}
+              meta={[
+                countryName(person.country),
+                person.entry.data.claimed
+                  ? (person.entry.data.focus ?? []).map(focusLabel).join(", ")
+                  : "",
+              ]
+                .filter(Boolean)
+                .join(" · ")}
+              figure={String(person.workCount)}
+              figureLabel={person.workCount === 1 ? "work" : "works"}
+              filterData={{
+                filterable: "",
+                country: person.country,
+                focus: person.entry.data.claimed ? (person.entry.data.focus ?? []).join(" ") : "",
+              }}
+            >
+              {!person.entry.data.claimed && <span class="unclaimed-flag">Unclaimed</span>}
+            </IndexPlate>
+          ))}
+        </ol>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .index-head {
+    margin-block-end: var(--space-xl);
+  }
+
+  .lede {
+    font-size: var(--text-lg);
+    color: var(--ink-muted);
+  }
+
+  .plate-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-block-end: var(--hairline) solid var(--rule);
+  }
+
+  /* A quiet state marker, not a warning. Unclaimed is a normal, respected
+     state in this archive — it must not read as "incomplete" or "lesser". */
+  .unclaimed-flag {
+    font-family: var(--face-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-plate);
+    color: var(--ink-faint);
+    border: var(--hairline) dashed var(--rule-strong);
+    border-radius: var(--radius);
+    padding: 0.05em 0.4em;
+    align-self: start;
+  }
+
+  .empty {
+    padding-block: var(--space-2xl);
+    text-align: center;
+    color: var(--ink-muted);
+  }
+</style>

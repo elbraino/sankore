@@ -1,0 +1,43 @@
+---
+import { Font } from "astro:assets";
+
+import { SITE_NAME, SITE_URL } from "../../site.config.ts";
+
+interface Props {
+  title: string;
+  description: string;
+  /** Set false on pages that should not be indexed by Pagefind. */
+  indexable?: boolean;
+}
+
+const { title, description } = Astro.props;
+
+// Canonical URLs are always built from SITE_URL (via Astro.site), never from a
+// staging origin — see site.config.ts.
+const canonical = new URL(Astro.url.pathname, SITE_URL).href;
+const fullTitle = title === SITE_NAME ? title : `${title} · ${SITE_NAME}`;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={SITE_NAME} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta name="twitter:card" content="summary" />
+
+<meta name="color-scheme" content="light" />
+<meta name="theme-color" content="#101823" />
+
+{/* Self-hosted at build time — no third-party font request at runtime. */}
+<Font cssVariable="--font-display" preload />
+<Font cssVariable="--font-body" preload />
+<Font cssVariable="--font-mono" />
+<Font cssVariable="--font-arabic" />
+
+{/* No analytics, no trackers. CLAUDE.md: "No external tracking scripts." */}

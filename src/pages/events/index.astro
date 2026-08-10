@@ -1,0 +1,313 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { countryName, EVENT_KIND_LABELS, loadArchive } from "../../lib/atlas";
+
+const { events } = await loadArchive();
+
+/*
+ * The event landscape is a stated differentiator (CLAUDE.md), so this page is
+ * built as a map of the region rather than a list: events group by country,
+ * countries sort by how much of the landscape they hold, and each card carries
+ * its own works count linking into a pre-filtered /works/ view.
+ */
+const byCountry = new Map<string, typeof events>();
+for (const event of events) {
+  const bucket = byCountry.get(event.country);
+  if (bucket) bucket.push(event);
+  else byCountry.set(event.country, [event]);
+}
+
+const regions = Array.from(byCountry.entries())
+  .map(([code, list]) => ({
+    code,
+    name: countryName(code),
+    events: list.slice().sort((a, b) => a.entry.data.name.localeCompare(b.entry.data.name)),
+    workCount: list.reduce((sum, e) => sum + e.workCount, 0),
+  }))
+  .sort((a, b) => b.events.length - a.events.length || a.name.localeCompare(b.name));
+
+const kindCounts = new Map<string, number>();
+for (const event of events) {
+  kindCounts.set(event.entry.data.kind, (kindCounts.get(event.entry.data.kind) ?? 0) + 1);
+}
+const kinds = Array.from(kindCounts.entries()).sort((a, b) => b[1] - a[1]);
+
+const activeCount = events.filter((e) => e.entry.data.status === "active").length;
+const dormantCount = events.length - activeCount;
+
+const description =
+  "The conference landscape of the Arab world and Africa: conferences, BSides chapters, CTFs, meetups, and villages, mapped by country.";
+---
+
+<BaseLayout title="Events" description={description}>
+  <div class="page">
+    <header class="index-head">
+      <p class="label">The regional landscape</p>
+      <h1>Events</h1>
+      <p class="prose lede">
+        Where this research gets presented. Conferences, BSides chapters, CTFs,
+        and villages across the Arab world and Africa — including the ones that
+        have gone quiet, because an archive should remember those too.
+      </p>
+
+      <dl class="landscape-stats">
+        <div>
+          <dt>Events mapped</dt>
+          <dd>{events.length}</dd>
+        </div>
+        <div>
+          <dt>Countries</dt>
+          <dd>{regions.length}</dd>
+        </div>
+        <div>
+          <dt>Active</dt>
+          <dd>{activeCount}</dd>
+        </div>
+        {
+          dormantCount > 0 && (
+            <div>
+              <dt>Dormant or ended</dt>
+              <dd>{dormantCount}</dd>
+            </div>
+          )
+        }
+      </dl>
+
+      <ul class="tag-list kind-summary">
+        {
+          kinds.map(([kind, count]) => (
+            <li class="tag">
+              {EVENT_KIND_LABELS[kind] ?? kind} · {count}
+            </li>
+          ))
+        }
+      </ul>
+    </header>
+
+    <div class="meridian"></div>
+
+    {
+      regions.map((region) => (
+        <section class="region">
+          <h2 class="region-head">
+            <span class="region-code plate">{region.code}</span>
+            <span class="region-name">{region.name}</span>
+            <span class="region-count">
+              {region.events.length} {region.events.length === 1 ? "event" : "events"}
+            </span>
+          </h2>
+
+          <ul class="event-grid">
+            {region.events.map((event) => (
+              <li class="event-card">
+                <p class="event-card-top">
+                  <span class="plate">{event.plate}</span>
+                  <span class="tag">{EVENT_KIND_LABELS[event.entry.data.kind] ?? event.entry.data.kind}</span>
+                  {event.entry.data.status !== "active" && (
+                    <span class="event-status">{event.entry.data.status}</span>
+                  )}
+                </p>
+
+                <h3 class="event-name">
+                  <a href={`/events/${event.entry.id}/`}>{event.entry.data.name}</a>
+                </h3>
+
+                <p class="event-where">
+                  {[event.entry.data.city, countryName(event.country)].filter(Boolean).join(", ")}
+                  {event.entry.data.first_year && (
+                    <span class="event-since"> · since {event.entry.data.first_year}</span>
+                  )}
+                </p>
+
+                {event.entry.data.description && (
+                  <p class="event-desc">{event.entry.data.description}</p>
+                )}
+
+                {/*
+                  Requirement: every event links into /works/ filtered to it.
+                  The href carries ?event=<slug>, which the filter island reads
+                  on load — so this works as a plain link, no JS needed to
+                  navigate and no JS needed for the unfiltered fallback.
+                */}
+                <p class="event-works">
+                  {event.workCount > 0 ? (
+                    <a href={`/works/?event=${event.entry.id}`}>
+                      {event.workCount} indexed {event.workCount === 1 ? "work" : "works"} →
+                    </a>
+                  ) : (
+                    <span class="event-works-none">
+                      No works indexed yet · <a href="/contribute/">add one</a>
+                    </span>
+                  )}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+
+    <section class="landscape-gaps">
+      <h2 class="label">Gaps in the map</h2>
+      <p class="prose">
+        This landscape is incomplete by definition — regional events are often
+        announced on social media and never archived. If a conference, BSides
+        chapter, CTF, or meetup from the region is missing,
+        <a href="/contribute/">add it</a>. Events that have ended are still
+        worth recording.
+      </p>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .index-head {
+    margin-block-end: var(--space-lg);
+  }
+
+  .lede {
+    font-size: var(--text-lg);
+    color: var(--ink-muted);
+  }
+
+  .landscape-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md) var(--space-xl);
+    margin-block: var(--space-lg) var(--space-md);
+  }
+
+  .landscape-stats dt {
+    font-family: var(--face-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    color: var(--ink-faint);
+  }
+
+  .landscape-stats dd {
+    margin: 0;
+    font-family: var(--face-display);
+    font-size: var(--text-2xl);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+  }
+
+  .kind-summary {
+    margin-block-end: var(--space-lg);
+  }
+
+  .region {
+    margin-block: var(--space-xl);
+  }
+
+  .region-head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+    font-size: var(--text-xl);
+    margin-block-end: var(--space-md);
+    padding-block-end: var(--space-xs);
+    border-block-end: var(--hairline) solid var(--rule);
+  }
+
+  .region-code {
+    font-size: var(--text-sm);
+    color: var(--gold-rule);
+  }
+
+  .region-name {
+    flex: 1;
+  }
+
+  .region-count {
+    font-family: var(--face-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+
+  .event-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+    gap: var(--space-md);
+  }
+
+  .event-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    padding: var(--space-md);
+    background: var(--paper-raised);
+    border: var(--hairline) solid var(--rule);
+    border-radius: var(--radius);
+  }
+
+  .event-card-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-xs);
+    margin: 0;
+  }
+
+  .event-status {
+    font-family: var(--face-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-plate);
+    color: var(--ink-faint);
+    border: var(--hairline) dashed var(--rule-strong);
+    border-radius: var(--radius);
+    padding: 0.05em 0.4em;
+  }
+
+  .event-name {
+    font-size: var(--text-lg);
+    margin: var(--space-2xs) 0 0;
+  }
+
+  .event-name a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .event-name a:hover {
+    color: var(--action-hover);
+    text-decoration: underline;
+  }
+
+  .event-where {
+    font-family: var(--face-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-faint);
+    margin: 0;
+  }
+
+  .event-desc {
+    font-size: var(--text-sm);
+    color: var(--ink-muted);
+    margin-block: var(--space-xs) 0;
+  }
+
+  .event-works {
+    margin: auto 0 0;
+    padding-block-start: var(--space-sm);
+    font-family: var(--face-mono);
+    font-size: var(--text-sm);
+  }
+
+  .event-works-none {
+    color: var(--ink-faint);
+    font-size: var(--text-xs);
+  }
+
+  .landscape-gaps {
+    margin-block-start: var(--space-2xl);
+    padding-block-start: var(--space-lg);
+    border-block-start: var(--hairline) solid var(--rule);
+  }
+</style>

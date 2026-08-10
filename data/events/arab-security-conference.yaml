@@ -1,0 +1,13 @@
+# UNVERIFIED SEED — added by Claude, 2026-08-09.
+# Fact-check name, country, city, first_year, and website before public launch.
+slug: arab-security-conference
+name: Arab Security Conference
+kind: conference
+country: EG
+city: Cairo
+website: https://arabsecurityconference.com
+status: active
+languages: [en, ar]
+description: >
+  Cairo-based regional security conference with a technical track and an
+  associated CTF, drawing speakers from across the Arab world.

@@ -1,0 +1,13 @@
+# UNVERIFIED SEED — added by Claude, 2026-08-09.
+# Fact-check name, country, city, first_year, and website before public launch.
+slug: gisec-global
+name: GISEC Global
+kind: conference
+country: AE
+city: Dubai
+website: https://gisec.ae
+status: active
+languages: [en, ar]
+description: >
+  Large Gulf security exhibition and conference in Dubai, with a technical
+  track and hosted CTF alongside the industry programme.

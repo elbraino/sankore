@@ -1,0 +1,226 @@
+/*
+ * Global element styles.
+ *
+ * All directional properties are LOGICAL (margin-inline-start, padding-block,
+ * border-inline-start …) — CLAUDE.md rule 5. Adding an Arabic RTL locale later
+ * must not require rewriting this file.
+ */
+
+@import "./tokens.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--face-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  /* The faint grid of an atlas plate. Two hairlines, no image request. */
+  background-image:
+    linear-gradient(to right, rgb(16 24 35 / 3%) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(16 24 35 / 3%) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--face-display);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  margin-block: 0 var(--space-sm);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--text-3xl);
+  letter-spacing: -0.02em;
+}
+h2 {
+  font-size: var(--text-2xl);
+  letter-spacing: -0.01em;
+}
+h3 {
+  font-size: var(--text-xl);
+}
+h4 {
+  font-size: var(--text-lg);
+}
+
+p,
+ul,
+ol {
+  margin-block: 0 var(--space-md);
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--action);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  transition: color var(--duration) var(--ease);
+}
+
+a:hover {
+  color: var(--action-hover);
+}
+
+/*
+ * Focus. Visible on every interactive element, never removed — the outline is
+ * two-tone so it stays visible against both paper and ink surfaces.
+ */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--focus-halo);
+  border-radius: var(--radius);
+}
+
+/* Dark surfaces flip the outline so it never disappears into the ink. */
+.on-ink :focus-visible {
+  outline-color: var(--paper);
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+hr {
+  border: 0;
+  border-block-start: var(--hairline) solid var(--rule);
+  margin-block: var(--space-lg);
+}
+
+code,
+kbd,
+samp {
+  font-family: var(--face-mono);
+  font-size: 0.9em;
+}
+
+/* ---------- shared primitives ---------- */
+
+.page {
+  inline-size: min(100% - (var(--gutter) * 2), var(--page-max));
+  margin-inline: auto;
+}
+
+.prose {
+  max-inline-size: var(--measure);
+}
+
+/* Screen-reader-only, but focusable (used by the skip link). */
+.visually-hidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  inset-block-start: var(--space-xs);
+  inset-inline-start: var(--space-xs);
+  z-index: 100;
+  padding: var(--space-xs) var(--space-md);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--face-mono);
+  font-size: var(--text-sm);
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/*
+ * The plate reference — the signature device. Country code + zero-padded
+ * number in mono, e.g. MA·014. Deliberately quiet: it is a wayfinding mark,
+ * not a badge.
+ */
+.plate {
+  font-family: var(--face-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-plate);
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Small caps-ish section label with a meridian rule. */
+.label {
+  font-family: var(--face-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--ink-muted);
+  margin-block-end: var(--space-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.label::after {
+  content: "";
+  flex: 1;
+  block-size: var(--hairline);
+  background: var(--gold-rule);
+  opacity: 0.5;
+}
+
+/* Tag / chip for data values. Teal per the palette rules. */
+.tag {
+  display: inline-block;
+  font-family: var(--face-mono);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  padding: 0.15em 0.5em;
+  color: var(--data);
+  background: var(--data-surface);
+  border-radius: var(--radius);
+  white-space: nowrap;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Meridian: the gold hairline used to separate major regions of a page. */
+.meridian {
+  block-size: var(--hairline);
+  background: var(--gold-rule);
+  opacity: 0.45;
+  border: 0;
+  margin: 0;
+}

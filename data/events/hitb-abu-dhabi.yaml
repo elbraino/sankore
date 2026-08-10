@@ -1,0 +1,13 @@
+# UNVERIFIED SEED — added by Claude, 2026-08-09.
+# Fact-check name, country, city, first_year, and website before public launch.
+slug: hitb-abu-dhabi
+name: HITBSecConf Abu Dhabi
+kind: conference
+country: AE
+city: Abu Dhabi
+website: https://conference.hitb.org
+status: active
+languages: [en]
+description: >
+  Gulf edition of the Hack In The Box conference series, with deep technical
+  talks and an Armory tooling track.

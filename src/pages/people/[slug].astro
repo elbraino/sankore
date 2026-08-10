@@ -1,0 +1,394 @@
+---
+import type { GetStaticPaths } from "astro";
+
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { countryName, focusLabel, loadArchive, WORK_TYPE_LABELS } from "../../lib/atlas";
+
+export const getStaticPaths = (async () => {
+  const { people, works } = await loadArchive();
+  return people.map((person) => ({
+    params: { slug: person.entry.id },
+    props: {
+      person,
+      works: works
+        .filter((work) => work.authors.some((author) => author.id === person.entry.id))
+        .sort((a, b) => b.entry.data.year - a.entry.data.year),
+    },
+  }));
+}) satisfies GetStaticPaths;
+
+const { person, works } = Astro.props;
+const data = person.entry.data;
+
+/*
+ * THE CLAIMED / UNCLAIMED RENDERING RULE — CLAUDE.md, non-negotiable rule 1.
+ *
+ * An unclaimed entry renders ONLY: display name, optional country, and linked
+ * works. No photo, no bio, no socials, no Arabic-script name.
+ *
+ * `claimed` is read once, here, and every personal field is read through the
+ * `claimed &&` guards below. The data layer already forbids these fields on
+ * unclaimed entries in three places (JSON Schema, validate.py, the zod
+ * superRefine) — this is the fourth and last gate, at render.
+ */
+const claimed = data.claimed === true;
+
+const links = claimed
+  ? (Object.entries(data.links ?? {}).filter(([, href]) => Boolean(href)) as [string, string][])
+  : [];
+
+const LINK_LABELS: Record<string, string> = {
+  website: "Website",
+  github: "GitHub",
+  linkedin: "LinkedIn",
+  twitter: "Twitter",
+  mastodon: "Mastodon",
+  scholar: "Scholar",
+};
+
+const description = claimed
+  ? `${data.name} — security researcher indexed in the archive.`
+  : `${data.name} — ${works.length} indexed ${works.length === 1 ? "work" : "works"}. This profile is unclaimed.`;
+---
+
+<BaseLayout title={data.name} description={description}>
+  <article class="page person" data-pagefind-body>
+    <header class="person-head">
+      <p class="person-plate">
+        <span class="plate">{person.plate}</span>
+        {!claimed && <span class="unclaimed-flag">Unclaimed profile</span>}
+      </p>
+
+      <div class="person-identity">
+        {
+          claimed && data.photo && (
+            <img class="person-photo" src={data.photo} alt="" width="96" height="96" />
+          )
+        }
+        <div>
+          <h1>{data.name}</h1>
+          {claimed && data.name_ar && <p class="person-name-ar" dir="rtl" lang="ar">{data.name_ar}</p>}
+          <p class="person-meta">
+            {data.country && <span>{countryName(data.country)}</span>}
+            {data.country && <span aria-hidden="true">·</span>}
+            <span class="person-count">
+              {works.length}
+              {works.length === 1 ? " indexed work" : " indexed works"}
+            </span>
+          </p>
+        </div>
+      </div>
+
+      {
+        claimed && data.focus && data.focus.length > 0 && (
+          <ul class="tag-list person-focus">
+            {data.focus.map((focus) => (
+              <li class="tag">{focusLabel(focus)}</li>
+            ))}
+          </ul>
+        )
+      }
+    </header>
+
+    {claimed && data.bio && <p class="person-bio prose">{data.bio}</p>}
+
+    {
+      claimed && links.length > 0 && (
+        <nav class="person-links" aria-label="Researcher links">
+          <ul class="tag-list">
+            {links.map(([kind, href]) => (
+              <li>
+                <a href={href} rel="me noopener external">
+                  {LINK_LABELS[kind] ?? kind}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )
+    }
+
+    {
+      /*
+       * The unclaimed state is a growth surface, not a fallback. It explains
+       * why the page is sparse (it is a consent decision, not missing data)
+       * and offers the one action that changes it.
+       */
+      !claimed && (
+        <section class="claim-card">
+          <p class="claim-kicker">This profile is unclaimed</p>
+          <p class="claim-body">
+            We index public work by default, but never personal details without
+            consent. So this page shows a name and linked works — and nothing
+            else — until the researcher asks us to add more.
+          </p>
+          <p class="claim-body">
+            <strong>Are you {data.name}?</strong> Claiming lets you add a bio,
+            links, an Arabic-script name, and a photo. You can also ask us to
+            remove the entry entirely, no reason needed.
+          </p>
+          <p class="claim-actions">
+            <a class="claim-button" href="/contribute/#claim">Claim this profile</a>
+            <a href="/about/#removal">Or request removal</a>
+          </p>
+        </section>
+      )
+    }
+
+    <div class="meridian"></div>
+
+    <section class="person-works">
+      <h2 class="label">Indexed works</h2>
+      {
+        works.length === 0 ? (
+          <p class="person-empty">
+            No works linked to this entry yet. <a href="/contribute/">Add one.</a>
+          </p>
+        ) : (
+          <ol class="plate-list">
+            {works.map((work) => (
+              <li class="work-row">
+                <span class="plate" aria-hidden="true">
+                  {work.plate}
+                </span>
+                <span class="work-row-body">
+                  <a href={`/works/${work.entry.id}/`}>{work.entry.data.title}</a>
+                  <span class="work-row-meta">
+                    {[WORK_TYPE_LABELS[work.entry.data.type], work.event?.data.name]
+                      .filter(Boolean)
+                      .join(" · ")}
+                  </span>
+                </span>
+                <span class="work-row-year">{work.entry.data.year}</span>
+              </li>
+            ))}
+          </ol>
+        )
+      }
+    </section>
+
+    {/* CLAUDE.md rule 3: removal is linked from every person page footer. */}
+    <footer class="person-foot">
+      <a href="/people/">← All people</a>
+      <a href="/about/#removal">Request removal or a correction</a>
+    </footer>
+  </article>
+</BaseLayout>
+
+<style>
+  .person {
+    max-inline-size: 52rem;
+  }
+
+  .person-plate {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-block-end: var(--space-sm);
+  }
+
+  .unclaimed-flag {
+    font-family: var(--face-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-plate);
+    color: var(--ink-faint);
+    border: var(--hairline) dashed var(--rule-strong);
+    border-radius: var(--radius);
+    padding: 0.05em 0.4em;
+  }
+
+  .person-identity {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .person-photo {
+    inline-size: 6rem;
+    block-size: 6rem;
+    border-radius: var(--radius);
+    object-fit: cover;
+    border: var(--hairline) solid var(--rule-strong);
+    flex: none;
+  }
+
+  .person-name-ar {
+    font-family: var(--face-arabic, var(--font-arabic));
+    font-size: var(--text-xl);
+    color: var(--ink-muted);
+    margin-block: 0 var(--space-2xs);
+  }
+
+  .person-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    font-family: var(--face-mono);
+    font-size: var(--text-sm);
+    color: var(--ink-muted);
+    margin: 0;
+  }
+
+  .person-count {
+    color: var(--ink-faint);
+  }
+
+  .person-focus {
+    margin-block-start: var(--space-md);
+  }
+
+  .person-bio {
+    font-size: var(--text-lg);
+    margin-block: var(--space-lg);
+  }
+
+  .person-links ul {
+    gap: var(--space-xs);
+  }
+
+  .person-links a {
+    display: inline-block;
+    font-family: var(--face-mono);
+    font-size: var(--text-xs);
+    padding: 0.25em 0.6em;
+    border: var(--hairline) solid var(--rule-strong);
+    border-radius: var(--radius);
+    text-decoration: none;
+  }
+
+  .person-links a:hover {
+    border-color: var(--action);
+  }
+
+  /* The claim card: deliberately the visual anchor of an unclaimed page, so
+     the page reads as intentional rather than empty. Gold rule, not an alert
+     colour — this is an invitation, not an error. */
+  .claim-card {
+    margin-block: var(--space-lg);
+    padding: var(--space-lg);
+    background: var(--paper-raised);
+    border: var(--hairline) solid var(--rule);
+    border-inline-start: 3px solid var(--gold);
+    border-radius: var(--radius);
+    max-inline-size: var(--measure);
+  }
+
+  .claim-kicker {
+    font-family: var(--face-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    color: var(--ink-muted);
+    margin-block-end: var(--space-sm);
+  }
+
+  .claim-body {
+    margin-block-end: var(--space-sm);
+  }
+
+  .claim-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-md);
+    margin-block-end: 0;
+    margin-block-start: var(--space-md);
+    font-size: var(--text-sm);
+  }
+
+  .claim-button {
+    display: inline-block;
+    background: var(--action);
+    color: var(--paper);
+    text-decoration: none;
+    font-family: var(--face-mono);
+    font-size: var(--text-sm);
+    letter-spacing: var(--tracking-plate);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius);
+    min-block-size: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    transition: background-color var(--duration) var(--ease);
+  }
+
+  .claim-button:hover {
+    background: var(--action-hover);
+    color: var(--paper);
+  }
+
+  .person-works {
+    margin-block-start: var(--space-lg);
+  }
+
+  .plate-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-block-end: var(--hairline) solid var(--rule);
+  }
+
+  .work-row {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr auto;
+    gap: var(--space-sm);
+    align-items: baseline;
+    padding-block: var(--space-sm);
+    border-block-start: var(--hairline) solid var(--rule);
+  }
+
+  .work-row-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    min-inline-size: 0;
+  }
+
+  .work-row-meta {
+    font-size: var(--text-sm);
+    color: var(--ink-muted);
+  }
+
+  .work-row-year {
+    font-family: var(--face-mono);
+    font-size: var(--text-sm);
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-faint);
+  }
+
+  .person-empty {
+    color: var(--ink-muted);
+    padding-block: var(--space-lg);
+  }
+
+  .person-foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    margin-block-start: var(--space-xl);
+    padding-block-start: var(--space-md);
+    border-block-start: var(--hairline) solid var(--rule);
+    font-size: var(--text-sm);
+  }
+
+  @media (max-width: 32rem) {
+    .work-row {
+      grid-template-columns: 1fr auto;
+    }
+
+    .work-row .plate {
+      grid-column: 1 / -1;
+    }
+
+    .person-identity {
+      align-items: flex-start;
+    }
+
+    .person-photo {
+      inline-size: 4rem;
+      block-size: 4rem;
+    }
+  }
+</style>

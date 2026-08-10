@@ -1,0 +1,144 @@
+---
+import FilterBar, { type FilterGroup } from "../../components/FilterBar.astro";
+import IndexPlate from "../../components/IndexPlate.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { countryName, loadArchive, WORK_TYPE_LABELS } from "../../lib/atlas";
+
+const { works } = await loadArchive();
+
+// Newest first, then alphabetical — an archive reads reverse-chronologically.
+const sorted = works
+  .slice()
+  .sort((a, b) => b.entry.data.year - a.entry.data.year || a.entry.data.title.localeCompare(b.entry.data.title));
+
+/** Count distinct values for a filter group, dropping empties. */
+function tally(values: (string | undefined)[]): Map<string, number> {
+  const counts = new Map<string, number>();
+  for (const value of values) {
+    if (!value) continue;
+    counts.set(value, (counts.get(value) ?? 0) + 1);
+  }
+  return counts;
+}
+
+function toOptions(
+  counts: Map<string, number>,
+  label: (value: string) => string,
+  sort: (a: [string, number], b: [string, number]) => number,
+) {
+  return Array.from(counts.entries())
+    .sort(sort)
+    .map(([value, count]) => ({ value, label: label(value), count }));
+}
+
+const byLabel = (a: [string, number], b: [string, number]) => a[0].localeCompare(b[0]);
+const byValueDesc = (a: [string, number], b: [string, number]) => b[0].localeCompare(a[0]);
+
+const groups: FilterGroup[] = [
+  {
+    key: "type",
+    label: "Type",
+    options: toOptions(
+      tally(sorted.map((w) => w.entry.data.type)),
+      (v) => WORK_TYPE_LABELS[v] ?? v,
+      byLabel,
+    ),
+  },
+  {
+    key: "year",
+    label: "Year",
+    options: toOptions(tally(sorted.map((w) => String(w.entry.data.year))), (v) => v, byValueDesc),
+  },
+  {
+    key: "country",
+    label: "Country",
+    options: toOptions(tally(sorted.map((w) => w.country)), countryName, (a, b) =>
+      countryName(a[0]).localeCompare(countryName(b[0])),
+    ),
+  },
+  {
+    key: "event",
+    label: "Event",
+    options: toOptions(
+      tally(sorted.map((w) => w.event?.id)),
+      (v) => sorted.find((w) => w.event?.id === v)?.event?.data.name ?? v,
+      byLabel,
+    ),
+  },
+];
+
+const description =
+  "Every indexed talk, tool, CVE, paper, and write-up in the archive, filterable by type, year, country, and event.";
+---
+
+<BaseLayout title="Works" description={description}>
+  <div class="page">
+    <header class="index-head">
+      <p class="label">Index of works</p>
+      <h1>Works</h1>
+      <p class="prose lede">
+        Public research from the region: conference talks, released tools,
+        assigned CVEs, papers, and write-ups. Works are indexed by default —
+        they are public record.
+      </p>
+    </header>
+
+    <FilterBar groups={groups} noun="works" total={sorted.length} />
+
+    {
+      sorted.length === 0 ? (
+        <p class="empty">The index is empty. <a href="/contribute/">Add the first work.</a></p>
+      ) : (
+        <ol class="plate-list" data-filter-list data-pagefind-ignore>
+          {sorted.map((work) => (
+            <IndexPlate
+              plate={work.plate}
+              href={`/works/${work.entry.id}/`}
+              title={work.entry.data.title}
+              meta={[
+                work.authors.map((a) => a.data.name).join(", "),
+                work.event?.data.name,
+                countryName(work.country),
+              ]
+                .filter(Boolean)
+                .join(" · ")}
+              figure={String(work.entry.data.year)}
+              figureLabel={WORK_TYPE_LABELS[work.entry.data.type] ?? work.entry.data.type}
+              filterData={{
+                filterable: "",
+                type: work.entry.data.type,
+                year: String(work.entry.data.year),
+                country: work.country,
+                event: work.event?.id ?? "",
+              }}
+            />
+          ))}
+        </ol>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .index-head {
+    margin-block-end: var(--space-xl);
+  }
+
+  .lede {
+    font-size: var(--text-lg);
+    color: var(--ink-muted);
+  }
+
+  .plate-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-block-end: var(--hairline) solid var(--rule);
+  }
+
+  .empty {
+    padding-block: var(--space-2xl);
+    text-align: center;
+    color: var(--ink-muted);
+  }
+</style>

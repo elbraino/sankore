@@ -1,0 +1,116 @@
+---
+/*
+ * PHASE 1 STUB.
+ *
+ * Phase 2 replaces the two sections below with real forms that generate a
+ * pre-filled GitHub PR (and a mailto fallback for people without a GitHub
+ * account). This page exists now because /people/<slug>/ links here for the
+ * claim flow and the footer links here from every page — a 404 behind the
+ * claim CTA would break the one action an unclaimed profile offers.
+ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE_NAME } from "../../site.config.ts";
+
+const description = `Add a work to ${SITE_NAME}, or claim your researcher profile.`;
+---
+
+<BaseLayout title="Contribute" description={description}>
+  <div class="page contribute">
+    <header>
+      <p class="label">Contribute</p>
+      <h1>Add to the archive</h1>
+      <p class="prose lede">
+        Two funnels: add a work that belongs in the index, or claim the profile
+        that already carries your name.
+      </p>
+    </header>
+
+    <div class="meridian"></div>
+
+    <section class="funnel prose" id="work">
+      <h2>Add a work</h2>
+      <p>
+        A talk, tool, CVE, paper, workshop, or write-up from the region. You do
+        not need to be the author — accurate public metadata from anyone is
+        welcome.
+      </p>
+      <p>What we record: title, type, year, author names, event, links, tags.</p>
+      <p class="funnel-note">
+        The guided form arrives in the next release. Until then, open a pull
+        request adding a YAML file under <code>data/works/</code>, following the
+        schema in <code>data/schema/work.schema.json</code>.
+      </p>
+    </section>
+
+    <section class="funnel prose" id="claim">
+      <h2>Claim your profile</h2>
+      <p>
+        If your name appears in the index, your entry currently shows only that
+        name, an optional country, and your linked works. Claiming lets you add
+        a biography, links, an Arabic-script name, and a photo — and nothing is
+        added that you do not supply yourself.
+      </p>
+      <p>
+        To verify a claim we need proof that you control an identity already
+        publicly tied to the work: a post from a linked account, a DNS TXT
+        record, a file on your own site, or confirmation from an email address
+        published in the original work.
+        <a href="/about/#claim-verification">Full verification methods.</a>
+      </p>
+      <p class="funnel-note">
+        The guided claim form arrives in the next release. Until then, open a
+        pull request editing your entry under <code>data/people/</code>, or
+        contact the maintainers.
+      </p>
+
+      <aside class="removal-callout">
+        <p>
+          <strong>Would you rather not be listed at all?</strong> That is an
+          equally valid answer, and it needs no explanation.
+          <a href="/about/#removal">Request removal</a> — honoured within seven
+          days, without debate.
+        </p>
+      </aside>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .contribute {
+    max-inline-size: 48rem;
+  }
+
+  .lede {
+    font-size: var(--text-lg);
+    color: var(--ink-muted);
+  }
+
+  .funnel {
+    margin-block-start: var(--space-xl);
+    scroll-margin-block-start: var(--space-lg);
+  }
+
+  h2 {
+    font-size: var(--text-xl);
+  }
+
+  .funnel-note {
+    border-inline-start: 2px solid var(--gold-rule);
+    padding-inline-start: var(--space-sm);
+    color: var(--ink-muted);
+    font-size: var(--text-sm);
+  }
+
+  .removal-callout {
+    margin-block-start: var(--space-lg);
+    padding: var(--space-md);
+    background: var(--paper-raised);
+    border: var(--hairline) solid var(--rule);
+    border-radius: var(--radius);
+  }
+
+  .removal-callout p {
+    margin: 0;
+    font-size: var(--text-sm);
+  }
+</style>

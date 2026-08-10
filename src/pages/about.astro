@@ -1,0 +1,157 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { MAINTAINERS_EMAIL, SITE_NAME } from "../../site.config.ts";
+
+const description = `What ${SITE_NAME} is, how entries get in, how consent works, and how to have yours removed.`;
+---
+
+<BaseLayout title="About" description={description}>
+  <div class="page about">
+    <header>
+      <p class="label">About</p>
+      <h1>An archive of the region's security research</h1>
+      <p class="prose lede">
+        {SITE_NAME} collects public security research from the Arab world and
+        Africa — talks, tools, CVEs, papers, write-ups — and credits the
+        researchers behind it on their own terms.
+      </p>
+    </header>
+
+    <div class="meridian"></div>
+
+    <section class="prose" id="mission">
+      <h2>Mission</h2>
+      <p>
+        Research from this region is scattered across conference sites that go
+        offline, threads that get deleted, and repositories nobody indexed. The
+        point of this project is durability: one public, version-controlled
+        record of what was found and who found it.
+      </p>
+      <p>
+        <strong>An archive, not a ranking.</strong> There are no scores, no
+        leaderboards, and no "top researchers" lists here, and there never will
+        be. Celebration, not competition.
+      </p>
+    </section>
+
+    <section class="prose" id="inclusion">
+      <h2>What gets included</h2>
+      <p>A work is eligible if all three hold:</p>
+      <ol>
+        <li>It is public — a published talk, released tool, assigned CVE, or published paper.</li>
+        <li>
+          At least one author is from, based in, or professionally rooted in the
+          covered region. Self-identification is accepted and never
+          interrogated.
+        </li>
+        <li>It is security research or security tooling, in a broad technical sense.</li>
+      </ol>
+      <p>
+        There is no judgment of quality, employer, nationality, or politics.
+        Editorial selection is limited to relevance and public availability.
+      </p>
+    </section>
+
+    <section class="prose" id="consent">
+      <h2>The consent model</h2>
+      <p>
+        Work entries are indexed by default, because published research is
+        public record. <strong>People are not.</strong>
+      </p>
+      <ul>
+        <li>
+          <strong>Unclaimed entries</strong> show a display name, an optional
+          country, and linked works. No photo, no biography, no social links, no
+          employer.
+        </li>
+        <li>
+          <strong>Claimed profiles</strong> — verified as belonging to that
+          person — may add a biography, links, an Arabic-script name, and a
+          photo. Nothing is added without the researcher asking for it.
+        </li>
+        <li>
+          <strong>Country is always optional</strong> and is removed on request
+          without question.
+        </li>
+        <li>Pseudonyms and handles are valid display names.</li>
+      </ul>
+      <p>
+        We recognise that in parts of the covered region, public association
+        with offensive security research can carry legal or personal risk. That
+        is why the default is minimal and the burden is on us, not on you.
+      </p>
+    </section>
+
+    <section class="prose" id="removal">
+      <h2>Removal and corrections</h2>
+      <p>
+        Any person may request any of the following, with
+        <strong>no justification required</strong>:
+      </p>
+      <ul>
+        <li>Removal of their person entry — works remain, attributed to name-only text.</li>
+        <li>
+          Full removal of their name from specific entries, replaced with
+          "researcher requested anonymity".
+        </li>
+        <li>Correction of any field.</li>
+      </ul>
+      <p>
+        Requests are honoured within 7 days, without debate. Contact
+        <a href={`mailto:${MAINTAINERS_EMAIL}`}>{MAINTAINERS_EMAIL}</a>, or open
+        a repository issue with the <code>takedown</code> label — the issue may
+        be filed anonymously.
+      </p>
+    </section>
+
+    <section class="prose" id="claim-verification">
+      <h2>Claim verification</h2>
+      <p>
+        A claim is accepted when the claimant proves control of an identity
+        already publicly tied to the work, via one of:
+      </p>
+      <ul>
+        <li>A post from a linked social or professional account referencing the claim.</li>
+        <li>A DNS TXT record, or a file on a personal site referenced in the claim.</li>
+        <li>Direct confirmation from an email address published in the original work.</li>
+      </ul>
+      <p>
+        Maintainers record which method was used in a private field. It is never
+        rendered on the site.
+      </p>
+    </section>
+
+    <section class="prose" id="maintainers">
+      <h2>Maintainers</h2>
+      <p>
+        The project aims for a majority of maintainers based in the covered
+        region. The maintainer list is recorded in the repository.
+      </p>
+      <p>Data is licensed CC BY 4.0. The site code is MIT.</p>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .about {
+    max-inline-size: 48rem;
+  }
+
+  .lede {
+    font-size: var(--text-lg);
+    color: var(--ink-muted);
+  }
+
+  section {
+    margin-block-start: var(--space-xl);
+    scroll-margin-block-start: var(--space-lg);
+  }
+
+  h2 {
+    font-size: var(--text-xl);
+  }
+
+  li {
+    margin-block-end: var(--space-xs);
+  }
+</style>

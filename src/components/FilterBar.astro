@@ -1,0 +1,237 @@
+---
+/**
+ * Client-side filter bar for the works index.
+ *
+ * Performance contract (CLAUDE.md): must stay responsive at 500+ entries.
+ * Approach — every row is server-rendered once with data-* attributes, and
+ * filtering only toggles the `hidden` attribute. No re-render, no VDOM, no
+ * framework. Cost per keystroke is one pass over a cached NodeList plus at most
+ * N attribute writes, and the browser batches the resulting style recalc.
+ *
+ * Progressive enhancement: with JS disabled the full unfiltered index is
+ * present and usable, and the fieldset below is hidden (a control that cannot
+ * work should not be offered).
+ */
+export interface FilterGroup {
+  /** Matches the data-<key> attribute on each row. */
+  key: string;
+  label: string;
+  options: { value: string; label: string; count: number }[];
+}
+
+interface Props {
+  groups: FilterGroup[];
+  /** Plural noun for the live count, e.g. "works". */
+  noun: string;
+  total: number;
+}
+
+const { groups, noun, total } = Astro.props;
+---
+
+<div class="filter-bar" data-filter-bar hidden>
+  <div class="filter-bar-head">
+    <p class="label">Filter the index</p>
+    <p class="filter-count" role="status" aria-live="polite">
+      <span data-filter-count>{total}</span>&#32;<span data-filter-noun>{noun}</span>
+    </p>
+  </div>
+
+  <div class="filter-groups">
+    {
+      groups.map((group) => (
+        <p class="filter-group">
+          <label class="filter-label" for={`filter-${group.key}`}>
+            {group.label}
+          </label>
+          <select id={`filter-${group.key}`} data-filter-key={group.key}>
+            <option value="">All</option>
+            {group.options.map((option) => (
+              <option value={option.value}>
+                {option.label} ({option.count})
+              </option>
+            ))}
+          </select>
+        </p>
+      ))
+    }
+
+    <button type="button" data-filter-reset hidden>Clear filters</button>
+  </div>
+
+  <p class="filter-empty" data-filter-empty hidden>
+    No entries match these filters. <button type="button" data-filter-reset>Clear filters</button>
+  </p>
+</div>
+
+<script>
+  // Island: filters the already-rendered index in place.
+  const bar = document.querySelector<HTMLElement>("[data-filter-bar]");
+  const list = document.querySelector<HTMLElement>("[data-filter-list]");
+
+  if (bar && list) {
+    // The bar ships hidden so it never appears without its behaviour.
+    bar.hidden = false;
+
+    const selects = Array.from(bar.querySelectorAll<HTMLSelectElement>("[data-filter-key]"));
+    const resets = Array.from(bar.querySelectorAll<HTMLButtonElement>("[data-filter-reset]"));
+    const countEl = bar.querySelector<HTMLElement>("[data-filter-count]");
+    const emptyEl = bar.querySelector<HTMLElement>("[data-filter-empty]");
+
+    // Cached once. At 500+ rows this is the difference between one DOM query
+    // and one per keystroke.
+    const rows = Array.from(list.querySelectorAll<HTMLElement>("[data-filterable]"));
+
+    function apply(pushState: boolean) {
+      const active = selects
+        .map((select) => ({ key: select.dataset.filterKey!, value: select.value }))
+        .filter((filter) => filter.value !== "");
+
+      let visible = 0;
+      for (const row of rows) {
+        // A row matches when every active filter matches. Multi-valued
+        // attributes (a work's authors' countries) are space-separated, so
+        // compare against the token list.
+        const match = active.every(({ key, value }) => {
+          const raw = row.dataset[key];
+          if (!raw) return false;
+          return raw === value || raw.split(" ").includes(value);
+        });
+        // Only touch the DOM when the state actually changes.
+        if (row.hidden === match) row.hidden = !match;
+        if (match) visible++;
+      }
+
+      if (countEl) countEl.textContent = String(visible);
+      if (emptyEl) emptyEl.hidden = visible !== 0;
+      for (const reset of resets) reset.hidden = active.length === 0;
+
+      // Keep filters in the URL so /works/?event=zacon links work and a
+      // filtered view can be shared or bookmarked.
+      const params = new URLSearchParams();
+      for (const { key, value } of active) params.set(key, value);
+      const query = params.toString();
+      const url = query ? `?${query}` : location.pathname;
+      if (pushState) history.replaceState(null, "", url);
+    }
+
+    // Hydrate from the URL: this is what makes the events page's
+    // "N works →" links land on a pre-filtered index.
+    const params = new URLSearchParams(location.search);
+    for (const select of selects) {
+      const value = params.get(select.dataset.filterKey!);
+      if (value !== null && Array.from(select.options).some((o) => o.value === value)) {
+        select.value = value;
+      }
+      select.addEventListener("change", () => apply(true));
+    }
+
+    for (const reset of resets) {
+      reset.addEventListener("click", () => {
+        for (const select of selects) select.value = "";
+        apply(true);
+        selects[0]?.focus();
+      });
+    }
+
+    apply(false);
+  }
+</script>
+
+<style>
+  .filter-bar {
+    margin-block-end: var(--space-lg);
+  }
+
+  .filter-bar-head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-md);
+  }
+
+  .filter-bar-head .label {
+    flex: 1;
+    margin-block-end: 0;
+  }
+
+  .filter-count {
+    font-family: var(--face-mono);
+    font-size: var(--text-sm);
+    color: var(--ink);
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .filter-groups {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: var(--space-sm) var(--space-md);
+    margin-block-start: var(--space-sm);
+  }
+
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    margin: 0;
+    min-inline-size: 0;
+    flex: 1 1 9rem;
+  }
+
+  .filter-label {
+    font-family: var(--face-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    color: var(--ink-muted);
+  }
+
+  select {
+    font-family: var(--face-body);
+    font-size: var(--text-sm);
+    color: var(--ink);
+    background: var(--paper-raised);
+    border: var(--hairline) solid var(--rule-strong);
+    border-radius: var(--radius);
+    padding: var(--space-2xs) var(--space-xs);
+    inline-size: 100%;
+    /* 44px min touch target on coarse pointers. */
+    min-block-size: 2.75rem;
+  }
+
+  button {
+    font-family: var(--face-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    color: var(--action);
+    background: transparent;
+    border: var(--hairline) solid var(--action);
+    border-radius: var(--radius);
+    padding: var(--space-xs) var(--space-sm);
+    cursor: pointer;
+    min-block-size: 2.75rem;
+    transition: color var(--duration) var(--ease), background-color var(--duration) var(--ease);
+  }
+
+  button:hover {
+    background: var(--action);
+    color: var(--paper);
+  }
+
+  .filter-empty {
+    margin-block-start: var(--space-lg);
+    padding: var(--space-lg);
+    border: var(--hairline) dashed var(--rule-strong);
+    text-align: center;
+    color: var(--ink-muted);
+  }
+
+  @media (min-width: 48rem) {
+    .filter-group {
+      flex: 0 1 11rem;
+    }
+  }
+</style>

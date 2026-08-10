@@ -1,0 +1,13 @@
+# UNVERIFIED SEED — added by Claude, 2026-08-09.
+# Fact-check name, country, city, first_year, and website before public launch.
+slug: black-hat-mea
+name: Black Hat MEA
+kind: conference
+country: SA
+city: Riyadh
+website: https://blackhatmea.com
+status: active
+languages: [en, ar]
+description: >
+  Middle East and Africa edition of Black Hat, held in Riyadh, with briefings,
+  trainings, and an Arsenal tooling track.

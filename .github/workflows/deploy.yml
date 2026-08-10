@@ -1,0 +1,57 @@
+name: Deploy to GitHub Pages
+
+# Production only. The custom domain (public/CNAME) is served from this repo's
+# Pages site. A staging origin is deliberately NOT wired up here — canonical
+# URLs, the sitemap, and OG tags are always built from SITE_URL, so a second
+# origin serving the same build would compete for indexing.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# One concurrent deploy; a newer push supersedes an in-flight one.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # The data validator gates the deploy exactly as it gates a local build:
+      # npm run build refuses to produce a site from invalid data, and the
+      # postbuild step then generates the Pagefind index into dist/.
+      - run: pip install -r requirements.txt
+      - run: npm ci
+      - run: npm run build
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

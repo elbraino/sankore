@@ -1,0 +1,137 @@
+---
+/**
+ * One row of an atlas index plate — the signature listing device.
+ *
+ * Renders as a semantic <li> with the plate reference in the margin, the title
+ * as the only link, and metadata beneath. Filter state is driven by data-*
+ * attributes so the filter island can hide rows without re-rendering anything.
+ */
+interface Props {
+  plate: string;
+  href: string;
+  title: string;
+  /** Rendered under the title: authors, venue, kind — already humanised. */
+  meta?: string;
+  /** Right-aligned mono figure, e.g. a year or a works count. */
+  figure?: string;
+  /** Small text under the figure, e.g. "works". */
+  figureLabel?: string;
+  /** Applied to the <li> for the filter island to read. */
+  filterData?: Record<string, string>;
+  /** Search-visible text for Pagefind beyond the title. */
+  class?: string;
+}
+
+const { plate, href, title, meta, figure, figureLabel, filterData = {}, class: className } =
+  Astro.props;
+
+const dataAttrs = Object.fromEntries(
+  Object.entries(filterData).map(([key, value]) => [`data-${key}`, value]),
+);
+---
+
+<li class:list={["plate-row", className]} {...dataAttrs}>
+  <span class="plate plate-row-ref" aria-hidden="true">{plate}</span>
+
+  <span class="plate-row-body">
+    <a class="plate-row-title" href={href}>{title}</a>
+    {meta && <span class="plate-row-meta">{meta}</span>}
+    <slot />
+  </span>
+
+  {
+    figure && (
+      <span class="plate-row-figure">
+        <span class="plate-row-figure-value">{figure}</span>
+        {figureLabel && <span class="plate-row-figure-label">{figureLabel}</span>}
+      </span>
+    )
+  }
+</li>
+
+<style>
+  .plate-row {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr auto;
+    align-items: baseline;
+    gap: var(--space-sm);
+    padding-block: var(--space-sm);
+    border-block-start: var(--hairline) solid var(--rule);
+  }
+
+  /* Zebra striping reads as an index plate rather than a table. */
+  .plate-row:nth-child(even) {
+    background: linear-gradient(to right, transparent, rgb(16 24 35 / 2.5%) 12%, transparent);
+  }
+
+  .plate-row-ref {
+    padding-block-start: 0.15em;
+  }
+
+  .plate-row-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    min-inline-size: 0;
+  }
+
+  .plate-row-title {
+    font-family: var(--face-display);
+    font-weight: 500;
+    font-size: var(--text-lg);
+    line-height: var(--leading-snug);
+    color: var(--ink);
+    text-decoration: none;
+    /* Generous hit area without making the whole row a link — screen-reader
+       users get one clear target per row. */
+    text-underline-offset: 0.2em;
+  }
+
+  .plate-row-title:hover {
+    color: var(--action-hover);
+    text-decoration: underline;
+  }
+
+  .plate-row-meta {
+    font-size: var(--text-sm);
+    color: var(--ink-muted);
+  }
+
+  .plate-row-figure {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-family: var(--face-mono);
+    text-align: end;
+  }
+
+  .plate-row-figure-value {
+    font-size: var(--text-base);
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+  }
+
+  .plate-row-figure-label {
+    font-size: var(--text-xs);
+    color: var(--ink-faint);
+    letter-spacing: var(--tracking-plate);
+  }
+
+  /* 360px: the plate reference moves above the title instead of stealing a
+     quarter of the line. */
+  @media (max-width: 32rem) {
+    .plate-row {
+      grid-template-columns: 1fr auto;
+      gap: var(--space-2xs) var(--space-sm);
+    }
+
+    .plate-row-ref {
+      grid-column: 1 / -1;
+      padding-block-start: 0;
+    }
+
+    .plate-row-figure {
+      align-self: start;
+    }
+  }
+</style>

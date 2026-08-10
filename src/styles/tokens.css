@@ -1,0 +1,113 @@
+/*
+ * Design tokens — the palette and scale from CLAUDE.md, "Design direction".
+ *
+ * Subject-grounded: cartography + archive. Deep atlas ink on paper, meridian
+ * gold for rules and emphasis, terracotta reserved for interactive states ONLY,
+ * muted teal for data and tags. No purple gradients, no glassmorphism.
+ */
+
+:root {
+  /* ---- palette (CLAUDE.md, verbatim) ---- */
+  --atlas-ink: #101823;
+  --atlas-paper: #ede7db;
+  --atlas-gold: #c9a227;
+  --atlas-terracotta: #b4552d;
+  --atlas-teal: #3e7c7b;
+
+  /* ---- derived surfaces ----
+   * Mixed from the two anchors so everything stays on the same axis.
+   * Every ratio below is MEASURED against the surface named, not estimated:
+   * AA body text needs 4.5:1, non-text UI boundaries 3:1. Text tokens are
+   * checked against the *worst* surface they can land on (--paper-sunk, the
+   * zebra stripe), not just --paper. */
+  --paper: var(--atlas-paper);
+  --paper-sunk: #e4dccc; /* index plate stripes, table zebra */
+  --paper-raised: #f4efe6; /* cards lifted off the page */
+
+  --ink: var(--atlas-ink); /* 14.49:1 on paper — body text */
+  --ink-muted: #4a5566; /* 6.13:1 on paper — secondary text */
+  --ink-faint: #566070; /* 5.16:1 paper / 4.67:1 sunk — metadata, still AA */
+
+  /* Decorative hairline. 1.9:1 — MUST NOT be the only thing identifying a
+     control; it separates rows, it does not bound an interactive target. */
+  --rule: #c9c0ae;
+  --rule-strong: #847f6c; /* 3.26:1 paper / 3.50:1 raised — AA for UI bounds */
+
+  /* Interactive. Terracotta is the ONLY interactive colour (CLAUDE.md). */
+  --action: #9c4526; /* 5.6:1 on paper — link text, AA at any size */
+  --action-hover: var(--atlas-terracotta);
+  --focus: var(--atlas-ink);
+  --focus-halo: var(--atlas-gold);
+
+  /* Data / tags. */
+  --data: #2f5f5e; /* 6.2:1 on paper — teal, darkened for text use */
+  --data-surface: #dfe6e3;
+
+  --gold: var(--atlas-gold);
+  --gold-rule: #b8942a;
+
+  /* ---- type ----
+   * Families come from Astro's build-time font pipeline (astro.config.mjs),
+   * which self-hosts them. --font-arabic is in every stack so Arabic-script
+   * names render correctly today, long before the RTL locale exists. */
+  --face-display: var(--font-display), var(--font-arabic), sans-serif;
+  --face-body: var(--font-body), var(--font-arabic), sans-serif;
+  --face-mono: var(--font-mono), ui-monospace, monospace;
+
+  /* Fluid scale, 360px → 1280px. Body never drops below 16px. */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+  --text-xl: clamp(1.25rem, 1.1rem + 0.7vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 1.25rem + 1.2vw, 2rem);
+  --text-3xl: clamp(1.875rem, 1.4rem + 2.2vw, 3rem);
+
+  --leading-tight: 1.15;
+  --leading-snug: 1.35;
+  --leading-normal: 1.6;
+
+  --tracking-plate: 0.08em;
+  --tracking-label: 0.12em;
+
+  /* ---- space ---- */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+
+  /* ---- layout ---- */
+  --measure: 68ch; /* prose line length */
+  --page-max: 76rem;
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 3rem);
+
+  --radius: 2px; /* archival, not rounded-friendly */
+  --hairline: 1px;
+
+  --duration: 160ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/*
+ * Reduced motion: honour the preference globally rather than per-component,
+ * so a component added later cannot forget to. Transitions collapse to
+ * effectively instant instead of being removed, which keeps state changes
+ * legible without animating them.
+ */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration: 0.01ms;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

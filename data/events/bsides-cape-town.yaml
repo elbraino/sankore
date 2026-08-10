@@ -1,0 +1,11 @@
+# UNVERIFIED SEED — added by Claude, 2026-08-09.
+# Fact-check name, country, city, first_year, and website before public launch.
+slug: bsides-cape-town
+name: BSides Cape Town
+kind: bsides
+country: ZA
+city: Cape Town
+status: active
+languages: [en]
+description: >
+  Security BSides chapter in Cape Town, run annually by the local community.

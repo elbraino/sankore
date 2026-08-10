@@ -1,0 +1,12 @@
+# UNVERIFIED SEED — added by Claude, 2026-08-09.
+# Fact-check name, country, city, first_year, and website before public launch.
+slug: zacon
+name: ZaCon
+kind: conference
+country: ZA
+city: Johannesburg
+status: active
+languages: [en]
+description: >
+  Grassroots South African security conference built around community talks
+  and original research.

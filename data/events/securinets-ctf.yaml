@@ -1,0 +1,13 @@
+# UNVERIFIED SEED — added by Claude, 2026-08-09.
+# Fact-check name, country, city, first_year, and website before public launch.
+slug: securinets-ctf
+name: Securinets CTF
+kind: ctf
+country: TN
+city: Tunis
+website: https://securinets.tn
+status: active
+languages: [en, fr, ar]
+description: >
+  Capture-the-flag competition run by the Securinets student club at INSAT,
+  one of the largest recurring CTFs in North Africa.
