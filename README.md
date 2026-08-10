@@ -1,4 +1,4 @@
-# Atlas (working name) — Arab World & Africa Security Research Index
+# Sankore — Arab World & Africa Security Research Index
 
 A public, open archive of cybersecurity research from the Arab world and
 Africa: conference talks, tools, CVEs, papers — and the researchers behind
@@ -17,14 +17,17 @@ Inspired by [Atlas Latino](https://atlaslatino.org/).
 1. `data/works/` — add a talk, tool, CVE, paper (see `data/schema/work.schema.json`).
 2. `data/people/` — stubs only unless it's you (consent model in GOVERNANCE.md).
 3. `data/events/` — regional conferences, BSides, meetups, CTFs.
-4. Run `python scripts/validate.py` before opening a PR.
+4. Run `npm run validate` before opening a PR.
 
 ## Development
 ```
 npm install
-pip install -r requirements.txt
+npm run setup:py     # creates .venv and installs the validator's deps
 npm run dev
 ```
+
+`npm run build` runs the data validator first and refuses to build on invalid
+data. `npm run validate` runs it on its own.
 
 ## Maintainers
 - (add 2–3 regional co-maintainers here before public launch)

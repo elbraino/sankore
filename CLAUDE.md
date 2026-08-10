@@ -1,4 +1,4 @@
-# Project: Atlas — Arab World & Africa Security Research Index
+# Project: Sankore — Arab World & Africa Security Research Index
 
 ## What this is
 A public, GitHub-backed directory of cybersecurity researchers and their work
@@ -6,8 +6,13 @@ A public, GitHub-backed directory of cybersecurity researchers and their work
 Africa. Modeled on atlaslatino.org. The repo IS the database: all content lives
 as YAML files under `data/`, validated by JSON Schema, rendered to a static site.
 
-Working name is a placeholder — final brand TBD. All naming must come from
+The name is **Sankore**, after the Timbuktu madrasa. The brand is that word
+alone — never write the domain as prose in copy. All naming must come from
 `site.config.ts` (`SITE_NAME`, `SITE_TAGLINE`, `SITE_URL`). Never hardcode a name.
+
+Canonical URLs, sitemap entries, and OG tags are always built from `SITE_URL`,
+never from `SITE_STAGING_URL` — a staging origin must not leak into search
+indexes or social cards.
 
 ## Non-negotiable product rules
 1. **Works are indexed by default; people are opt-in.** A `person` entry with

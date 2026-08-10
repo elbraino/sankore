@@ -1,0 +1,49 @@
+---
+// PHASE 0 SMOKE TEST — replaced wholesale in Phase 1.
+//
+// Deliberately unstyled. Its only job is to prove the pipeline end to end:
+// site.config.ts imports, all three glob loaders parse their YAML, the zod
+// shapes accept the sample records, and reference() resolves authors/events.
+// Do not build on this file — Phase 1 designs the real home page.
+import { getCollection, getEntry } from "astro:content";
+
+import { SITE_NAME, SITE_TAGLINE } from "../../site.config.ts";
+
+const people = await getCollection("people");
+const works = await getCollection("works");
+const events = await getCollection("events");
+
+// Resolve author references to prove reference() wiring works. Astro's
+// getEntry() returns undefined for a dangling id rather than throwing, so
+// assert explicitly — referential integrity is otherwise only enforced by
+// scripts/validate.py, which npm run build runs first.
+const resolvedAuthors = await Promise.all(
+  works.flatMap((work) => work.data.authors.map((author) => getEntry(author))),
+);
+if (resolvedAuthors.some((author) => author === undefined)) {
+  throw new Error("unresolved author reference — run npm run validate");
+}
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{SITE_NAME} — Phase 0 smoke test</title>
+  </head>
+  <body>
+    <h1>{SITE_NAME}</h1>
+    <p>{SITE_TAGLINE}</p>
+
+    <h2>Data pipeline</h2>
+    <ul>
+      <li>people: {people.length}</li>
+      <li>works: {works.length}</li>
+      <li>events: {events.length}</li>
+      <li>resolved author references: {resolvedAuthors.length}</li>
+    </ul>
+
+    <p><em>Phase 0 scaffold. No pages designed yet.</em></p>
+  </body>
+</html>
