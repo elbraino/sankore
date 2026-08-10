@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { MAINTAINERS_EMAIL, SITE_NAME } from "../../site.config.ts";
+import { ISSUES_URL, MAINTAINERS_EMAIL, SITE_NAME } from "../../site.config.ts";
 
 const description = `What ${SITE_NAME} is, how entries get in, how consent works, and how to have yours removed.`;
 ---
@@ -97,10 +97,16 @@ const description = `What ${SITE_NAME} is, how entries get in, how consent works
         <li>Correction of any field.</li>
       </ul>
       <p>
-        Requests are honoured within 7 days, without debate. Contact
-        <a href={`mailto:${MAINTAINERS_EMAIL}`}>{MAINTAINERS_EMAIL}</a>, or open
-        a repository issue with the <code>takedown</code> label — the issue may
-        be filed anonymously.
+        Requests are honoured within 7 days, without debate.
+        <a href={ISSUES_URL} rel="noopener external">Open a takedown request</a> —
+        it is pre-labelled, and the account you use is the only identity we see.
+        {
+          MAINTAINERS_EMAIL && (
+            <>
+              {" "}You can also email <a href={`mailto:${MAINTAINERS_EMAIL}`}>{MAINTAINERS_EMAIL}</a>.
+            </>
+          )
+        }
       </p>
     </section>
 

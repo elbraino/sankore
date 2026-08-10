@@ -23,13 +23,20 @@ export const SITE_URL = "https://sankoreindex.org";
  */
 export const SITE_STAGING_URL = "https://casatokaza.org";
 
+/** owner/repo. Backs the issue-based takedown route and Phase 2's PR URLs. */
+export const SITE_REPO = "elbraino/sankore";
+
+/** Where a takedown or correction request can be filed, with no account needed
+ *  beyond GitHub. Issues may be filed anonymously per GOVERNANCE.md. */
+export const ISSUES_URL = `https://github.com/${SITE_REPO}/issues/new?labels=takedown`;
+
 /**
- * TODO (Phase 1): `public/CNAME` containing the production hostname ships with
- * the GitHub Pages deploy workflow. Do not create it before then.
+ * Takedown + claim contact.
+ *
+ * Deliberately `null` until a real, monitored address exists. CLAUDE.md rule 3
+ * makes removal non-negotiable, so publishing a placeholder address here would
+ * be worse than publishing none: it would advertise a route that silently
+ * fails. While this is null, /about/ routes removal requests to ISSUES_URL,
+ * which works. Set it to a real address to add the email route back.
  */
-
-/** TODO (Phase 2): owner/repo, used to build pre-filled GitHub PR URLs. */
-export const SITE_REPO = "OWNER/REPO";
-
-/** TODO: takedown + claim contact, referenced by GOVERNANCE.md. */
-export const MAINTAINERS_EMAIL = "maintainers@example.org";
+export const MAINTAINERS_EMAIL: string | null = null;
