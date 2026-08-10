@@ -29,6 +29,19 @@ npm run dev
 `npm run build` runs the data validator first and refuses to build on invalid
 data. `npm run validate` runs it on its own.
 
+### Dependency lockfile
+
+CI runs `npm ci` on Linux, so `package-lock.json` must carry the Linux
+platform-specific optional dependencies (sharp, lightningcss) as well as your
+own. After adding or upgrading a dependency on macOS or Windows, run:
+
+```
+npm install --package-lock-only --os=linux --cpu=x64
+```
+
+and commit the result, otherwise CI fails with "can only install packages when
+your package.json and package-lock.json are in sync".
+
 ## Maintainers
 - (add 2–3 regional co-maintainers here before public launch)
 
