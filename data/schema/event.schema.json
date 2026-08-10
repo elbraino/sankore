@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "event.schema.json",
+  "title": "Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["slug", "name", "kind"],
+  "properties": {
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "name": { "type": "string", "minLength": 2 },
+    "kind": {
+      "type": "string",
+      "enum": ["conference", "bsides", "ctf", "meetup", "village", "training"]
+    },
+    "country": { "type": "string", "pattern": "^[A-Z]{2}$" },
+    "city": { "type": "string" },
+    "website": { "type": "string", "format": "uri" },
+    "cfp_url": { "type": "string", "format": "uri" },
+    "first_year": { "type": "integer", "minimum": 1990 },
+    "status": {
+      "type": "string",
+      "enum": ["active", "dormant", "ended"],
+      "default": "active"
+    },
+    "description": { "type": "string", "maxLength": 600 },
+    "languages": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["en", "ar", "fr", "sw", "other"] }
+    }
+  }
+}

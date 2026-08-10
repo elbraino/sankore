@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "work.schema.json",
+  "title": "Work",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["slug", "title", "type", "year", "authors"],
+  "properties": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "title": { "type": "string", "minLength": 3 },
+    "type": {
+      "type": "string",
+      "enum": ["talk", "tool", "cve", "paper", "arsenal", "workshop", "book", "writeup"]
+    },
+    "year": { "type": "integer", "minimum": 1990, "maximum": 2100 },
+    "authors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+        "description": "Person slug. Must exist in data/people/."
+      }
+    },
+    "event": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Event slug (for talks/workshops/arsenal). Must exist in data/events/."
+    },
+    "abstract": { "type": "string", "maxLength": 1200 },
+    "language": {
+      "type": "string",
+      "enum": ["en", "ar", "fr", "sw", "other"],
+      "description": "Language the work was delivered/written in."
+    },
+    "cve_ids": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^CVE-\\d{4}-\\d{4,}$" }
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "video": { "type": "string", "format": "uri" },
+        "slides": { "type": "string", "format": "uri" },
+        "code": { "type": "string", "format": "uri" },
+        "paper": { "type": "string", "format": "uri" },
+        "advisory": { "type": "string", "format": "uri" },
+        "archive": { "type": "string", "format": "uri", "description": "Wayback/archive.org mirror — add whenever possible; regional con sites die." }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "draft": {
+      "type": "boolean",
+      "description": "Seed-helper output awaiting review. Drafts never build."
+    },
+    "added": { "type": "string", "format": "date" }
+  }
+}

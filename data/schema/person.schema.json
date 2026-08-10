@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "person.schema.json",
+  "title": "Person",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["slug", "name", "claimed"],
+  "properties": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Stable URL identifier. Never change after publication."
+    },
+    "name": {
+      "type": "string",
+      "minLength": 2,
+      "description": "Display name as the person presents it publicly."
+    },
+    "name_ar": {
+      "type": "string",
+      "description": "Optional Arabic-script name (claimed profiles only)."
+    },
+    "claimed": {
+      "type": "boolean",
+      "description": "false = unclaimed stub: only name, country, works render. true = full profile allowed."
+    },
+    "country": {
+      "type": "string",
+      "pattern": "^[A-Z]{2}$",
+      "description": "ISO 3166-1 alpha-2. Optional; omit if the person prefers."
+    },
+    "focus": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "web", "mobile", "cloud", "network", "hardware", "iot", "ics-ot",
+          "reverse-engineering", "malware", "forensics-dfir", "threat-intel",
+          "cryptography", "identity", "api-security", "ai-ml-security",
+          "social-engineering", "grc", "blue-team", "red-team", "bug-bounty",
+          "automotive", "telecom", "blockchain"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "bio": {
+      "type": "string",
+      "maxLength": 800,
+      "description": "Claimed profiles only. Enforced at render, validated here for length."
+    },
+    "photo": {
+      "type": "string",
+      "description": "Claimed profiles only. Path under /public/photos/."
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Claimed profiles only.",
+      "properties": {
+        "website": { "type": "string", "format": "uri" },
+        "github": { "type": "string", "format": "uri" },
+        "linkedin": { "type": "string", "format": "uri" },
+        "twitter": { "type": "string", "format": "uri" },
+        "mastodon": { "type": "string", "format": "uri" },
+        "scholar": { "type": "string", "format": "uri" }
+      }
+    },
+    "claim_verification": {
+      "type": "string",
+      "description": "Maintainer note: how the claim was verified (URL or method). Not rendered."
+    },
+    "added": { "type": "string", "format": "date" },
+    "updated": { "type": "string", "format": "date" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "claimed": { "const": false } } },
+      "then": {
+        "not": {
+          "anyOf": [
+            { "required": ["bio"] },
+            { "required": ["photo"] },
+            { "required": ["links"] },
+            { "required": ["name_ar"] }
+          ]
+        }
+      }
+    }
+  ]
+}
