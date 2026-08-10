@@ -1,6 +1,7 @@
 ---
 import type { GetStaticPaths } from "astro";
 
+import SourceLink from "../../components/SourceLink.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { countryName, focusLabel, loadArchive, WORK_TYPE_LABELS } from "../../lib/atlas";
 
@@ -166,6 +167,8 @@ const description = claimed
         )
       }
     </section>
+
+    <SourceLink kind="people" slug={person.entry.id} />
 
     {/* CLAUDE.md rule 3: removal is linked from every person page footer. */}
     <footer class="person-foot">

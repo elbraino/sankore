@@ -9,7 +9,7 @@
  * claim CTA would break the one action an unclaimed profile offers.
  */
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { SITE_NAME } from "../../site.config.ts";
+import { dataDirUrl, SITE_NAME, SITE_REPO, SITE_REPO_URL } from "../../site.config.ts";
 
 const description = `Add a work to ${SITE_NAME}, or claim your researcher profile.`;
 ---
@@ -22,6 +22,12 @@ const description = `Add a work to ${SITE_NAME}, or claim your researcher profil
       <p class="prose lede">
         Two funnels: add a work that belongs in the index, or claim the profile
         that already carries your name.
+      </p>
+      <p class="prose repo-note">
+        Everything on this site is generated from YAML in
+        <a href={SITE_REPO_URL} rel="noopener external">{SITE_REPO}</a>. There is
+        no database and no admin panel — a contribution is a pull request, and a
+        correction is a one-line diff.
       </p>
     </header>
 
@@ -36,9 +42,12 @@ const description = `Add a work to ${SITE_NAME}, or claim your researcher profil
       </p>
       <p>What we record: title, type, year, author names, event, links, tags.</p>
       <p class="funnel-note">
-        The guided form arrives in the next release. Until then, open a pull
-        request adding a YAML file under <code>data/works/</code>, following the
-        schema in <code>data/schema/work.schema.json</code>.
+        The guided form arrives in the next release. Until then, add a YAML file
+        to <a href={dataDirUrl("data/works")} rel="noopener external"><code>data/works/</code></a>
+        following
+        <a href={`${SITE_REPO_URL}/blob/main/data/schema/work.schema.json`} rel="noopener external">
+          <code>work.schema.json</code></a>, and open a pull request. CI validates
+        every entry, so you will know within a minute if a field is wrong.
       </p>
     </section>
 
@@ -58,9 +67,11 @@ const description = `Add a work to ${SITE_NAME}, or claim your researcher profil
         <a href="/about/#claim-verification">Full verification methods.</a>
       </p>
       <p class="funnel-note">
-        The guided claim form arrives in the next release. Until then, open a
-        pull request editing your entry under <code>data/people/</code>, or
-        contact the maintainers.
+        The guided claim form arrives in the next release. Until then, edit your
+        entry in
+        <a href={dataDirUrl("data/people")} rel="noopener external"><code>data/people/</code></a>
+        — set <code>claimed: true</code> and add what you want shown — and open a
+        pull request. Your entry page links directly to its own file.
       </p>
 
       <aside class="removal-callout">
@@ -92,6 +103,12 @@ const description = `Add a work to ${SITE_NAME}, or claim your researcher profil
 
   h2 {
     font-size: var(--text-xl);
+  }
+
+  .repo-note {
+    font-size: var(--text-sm);
+    color: var(--ink-muted);
+    margin-block-start: var(--space-md);
   }
 
   .funnel-note {

@@ -1,6 +1,7 @@
 ---
 import type { GetStaticPaths } from "astro";
 
+import SourceLink from "../../components/SourceLink.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { countryName, EVENT_KIND_LABELS, loadArchive, WORK_TYPE_LABELS } from "../../lib/atlas";
 
@@ -128,6 +129,8 @@ const description =
         )
       }
     </section>
+
+    <SourceLink kind="events" slug={event.entry.id} />
 
     <footer class="event-foot">
       <a href="/events/">← The event landscape</a>

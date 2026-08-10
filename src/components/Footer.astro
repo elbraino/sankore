@@ -1,5 +1,5 @@
 ---
-import { SITE_NAME } from "../../site.config.ts";
+import { SITE_NAME, SITE_REPO, SITE_REPO_URL } from "../../site.config.ts";
 
 const year = new Date().getFullYear();
 ---
@@ -36,11 +36,40 @@ const year = new Date().getFullYear();
         <li><a href="/events/">Event landscape</a></li>
       </ul>
     </nav>
+
+    {/*
+      The repository is not a footnote here — it IS the database (CLAUDE.md).
+      Every page on this site is generated from the YAML in it, so the archive
+      is only as auditable as this link is easy to find.
+    */}
+    <nav class="footer-block" aria-label="Source">
+      <p class="footer-heading">Source of truth</p>
+      <ul>
+        <li>
+          <a href={SITE_REPO_URL} rel="noopener external">
+            {SITE_REPO} on GitHub
+          </a>
+        </li>
+        <li>
+          <a href={`${SITE_REPO_URL}/tree/main/data`} rel="noopener external">
+            Browse the raw data
+          </a>
+        </li>
+        <li>
+          <a href={`${SITE_REPO_URL}/commits/main`} rel="noopener external">
+            Change history
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
 
   <div class="page footer-legal">
     <p>Data: CC BY 4.0 · Code: MIT · {year}</p>
-    <p class="footer-plate">Takedown requests are honoured without debate.</p>
+    <p class="footer-plate">
+      Every page here is generated from public YAML. Takedown requests are
+      honoured without debate.
+    </p>
   </div>
 </footer>
 

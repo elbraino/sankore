@@ -1,6 +1,7 @@
 ---
 import type { GetStaticPaths } from "astro";
 
+import SourceLink from "../../components/SourceLink.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { countryName, loadArchive, WORK_TYPE_LABELS } from "../../lib/atlas";
 
@@ -138,6 +139,8 @@ const description = data.abstract?.slice(0, 200) ?? `${typeLabel} (${data.year})
         </section>
       )
     }
+
+    <SourceLink kind="works" slug={work.entry.id} />
 
     <footer class="work-foot">
       <a href="/works/">← All works</a>

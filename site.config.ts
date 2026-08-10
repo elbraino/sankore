@@ -26,6 +26,26 @@ export const SITE_STAGING_URL = "https://casatokaza.org";
 /** owner/repo. Backs the issue-based takedown route and Phase 2's PR URLs. */
 export const SITE_REPO = "elbraino/sankore";
 
+/** The repository is the database — every page should be able to point at it. */
+export const SITE_REPO_URL = `https://github.com/${SITE_REPO}`;
+
+/** Default branch, used to build permalinks into the data files. */
+export const SITE_BRANCH = "main";
+
+/**
+ * Link to the YAML file that backs a single entry. This is the source of truth
+ * for that entry: what the site renders is a projection of this file, and a
+ * correction is a change to it.
+ */
+export function dataFileUrl(kind: "people" | "works" | "events", slug: string): string {
+  return `${SITE_REPO_URL}/blob/${SITE_BRANCH}/data/${kind}/${slug}.yaml`;
+}
+
+/** Link to a directory of data files, for the contribute flow. */
+export function dataDirUrl(path: string): string {
+  return `${SITE_REPO_URL}/tree/${SITE_BRANCH}/${path}`;
+}
+
 /** Where a takedown or correction request can be filed, with no account needed
  *  beyond GitHub. Issues may be filed anonymously per GOVERNANCE.md. */
 export const ISSUES_URL = `https://github.com/${SITE_REPO}/issues/new?labels=takedown`;

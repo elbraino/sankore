@@ -1,6 +1,12 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { ISSUES_URL, MAINTAINERS_EMAIL, SITE_NAME } from "../../site.config.ts";
+import {
+  ISSUES_URL,
+  MAINTAINERS_EMAIL,
+  SITE_NAME,
+  SITE_REPO,
+  SITE_REPO_URL,
+} from "../../site.config.ts";
 
 const description = `What ${SITE_NAME} is, how entries get in, how consent works, and how to have yours removed.`;
 ---
@@ -31,6 +37,29 @@ const description = `What ${SITE_NAME} is, how entries get in, how consent works
         <strong>An archive, not a ranking.</strong> There are no scores, no
         leaderboards, and no "top researchers" lists here, and there never will
         be. Celebration, not competition.
+      </p>
+    </section>
+
+    <section class="prose" id="source">
+      <h2>Where the data lives</h2>
+      <p>
+        There is no database behind this site. Every entry is a plain YAML file
+        in a public Git repository, and each page you read is generated from
+        one of them at build time.
+      </p>
+      <p>
+        That is the point: you can read exactly what is recorded about anyone,
+        see the source it was taken from, and read the full history of every
+        change and who made it. Each work, person, and event page links straight
+        to the file behind it.
+      </p>
+      <p>
+        <a href={SITE_REPO_URL} rel="noopener external">{SITE_REPO}</a> ·
+        <a href={`${SITE_REPO_URL}/tree/main/data`} rel="noopener external">the data</a> ·
+        <a href={`${SITE_REPO_URL}/blob/main/data/SOURCES.md`} rel="noopener external">
+          source coverage
+        </a> ·
+        <a href={`${SITE_REPO_URL}/commits/main`} rel="noopener external">change history</a>
       </p>
     </section>
 
@@ -131,7 +160,8 @@ const description = `What ${SITE_NAME} is, how entries get in, how consent works
       <h2>Maintainers</h2>
       <p>
         The project aims for a majority of maintainers based in the covered
-        region. The maintainer list is recorded in the repository.
+        region. The maintainer list is recorded in
+        <a href={`${SITE_REPO_URL}/blob/main/README.md`} rel="noopener external">the repository</a>.
       </p>
       <p>Data is licensed CC BY 4.0. The site code is MIT.</p>
     </section>
