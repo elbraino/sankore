@@ -31,16 +31,12 @@ data. `npm run validate` runs it on its own.
 
 ### Dependency lockfile
 
-CI runs `npm ci` on Linux, so `package-lock.json` must carry the Linux
-platform-specific optional dependencies (sharp, lightningcss) as well as your
-own. After adding or upgrading a dependency on macOS or Windows, run:
-
-```
-npm install --package-lock-only --os=linux --cpu=x64
-```
-
-and commit the result, otherwise CI fails with "can only install packages when
-your package.json and package-lock.json are in sync".
+CI runs `npm install`, not `npm ci`. Astro depends on sharp, whose optional
+`@img/sharp-wasm32` package declares `@emnapi/runtime`; npm does not write that
+entry into a lockfile generated on macOS, so `npm ci` fails on Linux runners
+with an EUSAGE "out of sync" error even though nothing is actually wrong.
+Versions are still pinned by the lockfile — install only reconciles the
+platform-specific optional packages. Commit `package-lock.json` as usual.
 
 ## Maintainers
 - (add 2–3 regional co-maintainers here before public launch)

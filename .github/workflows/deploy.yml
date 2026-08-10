@@ -38,7 +38,11 @@ jobs:
       # npm run build refuses to produce a site from invalid data, and the
       # postbuild step then generates the Pagefind index into dist/.
       - run: pip install -r requirements.txt
-      - run: npm ci
+      # `npm install`, not `npm ci`: sharp's optional `@img/sharp-wasm32` declares
+      # `@emnapi/runtime`, which npm omits from a lockfile generated on macOS,
+      # so `npm ci` fails on Linux runners with EUSAGE. The lockfile still pins
+      # every version; install reconciles only the platform-specific optionals.
+      - run: npm install --no-audit --no-fund
       - run: npm run build
 
       - uses: actions/configure-pages@v5
