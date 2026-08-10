@@ -102,13 +102,32 @@ export interface EventRecord {
 }
 
 /**
- * A work's country is its first author's country — the archive indexes people,
- * and a work belongs to wherever its researchers are rooted. Works whose
- * authors have all withheld country (always optional, GOVERNANCE.md) fall back
- * to UNKNOWN_COUNTRY rather than being dropped from the index.
+ * A work's REGION, resolved in a deliberate order of confidence:
+ *
+ *   1. the first author who states a country — the strongest claim, because
+ *      the person said it about themselves;
+ *   2. otherwise the country of the event it was presented at — a fact about
+ *      the work ("this was presented in South Africa"), not a claim about any
+ *      person's nationality;
+ *   3. otherwise UNKNOWN_COUNTRY, so it still appears in the index.
+ *
+ * Step 2 matters. Country is optional and removable for people (GOVERNANCE.md),
+ * and sourcing rules forbid inferring nationality from a name or from the fact
+ * that someone spoke at a regional conference. Without the event fallback,
+ * every talk by a speaker who has not stated a country would collapse into
+ * "Unattributed" and the regional map would go blank — while the venue country
+ * is a plainly documented fact. If a person later has their country removed,
+ * their works degrade to the venue rather than disappearing.
+ *
+ * This is why the works facet is labelled "Region", not "Country": it mixes a
+ * personal claim with a venue fact, and must not be read as either alone.
  */
-function workCountry(authors: Person[]): string {
-  return authors.find((a) => a.data.country)?.data.country ?? UNKNOWN_COUNTRY;
+function workCountry(authors: Person[], event: Event | undefined): string {
+  return (
+    authors.find((a) => a.data.country)?.data.country ??
+    event?.data.country ??
+    UNKNOWN_COUNTRY
+  );
 }
 
 /**
@@ -139,7 +158,7 @@ export async function loadArchive(): Promise<{
   );
 
   const workPlates = buildPlates(
-    resolved.map((r) => ({ id: r.entry.id, country: workCountry(r.authors), added: r.entry.data.added })),
+    resolved.map((r) => ({ id: r.entry.id, country: workCountry(r.authors, r.event), added: r.entry.data.added })),
     (w) => w.country,
     (w) => w.added,
   );
@@ -160,7 +179,7 @@ export async function loadArchive(): Promise<{
     entry,
     authors,
     event,
-    country: workCountry(authors),
+    country: workCountry(authors, event),
     plate: workPlates.get(entry.id) ?? formatPlate(UNKNOWN_COUNTRY, 0),
   }));
 

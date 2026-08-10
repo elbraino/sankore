@@ -1,0 +1,13 @@
+# VERIFIED 2026-08-10 — event confirmed; naijaseccon.com is robots-blocked, so
+# talk-level data needs archive.org snapshots before speakers can be indexed.
+slug: naijaseccon
+name: NaijaSecCon
+kind: conference
+country: NG
+city: Lagos
+website: https://naijaseccon.com
+first_year: 2017
+status: active
+languages: [en]
+description: >
+  Nigerian security conference held in Lagos, running since 2017.

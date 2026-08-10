@@ -50,8 +50,12 @@ const groups: FilterGroup[] = [
     options: toOptions(tally(sorted.map((w) => String(w.entry.data.year))), (v) => v, byValueDesc),
   },
   {
+    // Labelled "Region", not "Country": a work's region is its first author's
+    // stated country where one exists, and otherwise the country of the venue
+    // it was presented at. See workCountry() in src/lib/atlas.ts — it must not
+    // be read as a claim about any individual's nationality.
     key: "country",
-    label: "Country",
+    label: "Region",
     options: toOptions(tally(sorted.map((w) => w.country)), countryName, (a, b) =>
       countryName(a[0]).localeCompare(countryName(b[0])),
     ),

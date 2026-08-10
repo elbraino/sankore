@@ -1,0 +1,15 @@
+# VERIFIED 2026-08-10 — kenya.opcde.com/speakers.html.
+# Recorded as a distinct event from the Dubai edition so that talks presented in
+# Nairobi are attributed to Kenya rather than the UAE.
+slug: opcde-kenya
+name: OPCDE Kenya
+kind: conference
+country: KE
+city: Nairobi
+website: https://kenya.opcde.com
+first_year: 2018
+status: dormant
+languages: [en, sw]
+description: >
+  East African edition of OPCDE, held in Nairobi with a deep technical
+  programme including baseband and firmware research.

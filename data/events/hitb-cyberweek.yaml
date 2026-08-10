@@ -1,0 +1,15 @@
+# VERIFIED 2026-08-10 — cyberweek.ae / conference.hitb.org. One edition under
+# this name; HITB later returned to the UAE as HITB+in{:cyber} (2024), which is
+# a separate entry once its programme is sourced.
+slug: hitb-cyberweek
+name: "HITB+CyberWeek"
+kind: conference
+country: AE
+city: Abu Dhabi
+website: https://conference.hitb.org
+first_year: 2019
+status: ended
+languages: [en]
+description: >
+  Abu Dhabi edition of the Hack In The Box conference series, run as part of
+  CyberWeek in 2019.

@@ -1,13 +1,15 @@
-# UNVERIFIED SEED — added by Claude, 2026-08-09.
-# Fact-check name, country, city, first_year, and website before public launch.
-# first_year omitted: not confidently known.
+# VERIFIED 2026-08-10 — bluekaizen.org speakers page + CSCAMP 2011 agenda PDF.
+# Note: organiser active since 2010; first conference edition 2011.
 slug: cairo-security-camp
 name: Cairo Security Camp
 kind: conference
 country: EG
 city: Cairo
+website: https://www.bluekaizen.org
+first_year: 2010
 status: active
 languages: [en, ar]
 description: >
-  Long-running Egyptian security gathering organised by the Bluekaizen
-  community, mixing technical talks with training.
+  Egyptian security conference organised by the Bluekaizen community, described
+  by its organisers as the first information security conference organised in an
+  Arab country.

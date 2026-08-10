@@ -1,0 +1,13 @@
+# VERIFIED 2026-08-10 — athack.com now redirects to Black Hat MEA.
+# Retained because the 2021 edition happened and the archive should remember it.
+slug: athack
+name: "@Hack"
+kind: conference
+country: SA
+city: Riyadh
+first_year: 2021
+status: ended
+languages: [en, ar]
+description: >
+  Riyadh security conference held in 2021, subsequently rebranded as
+  Black Hat MEA.
