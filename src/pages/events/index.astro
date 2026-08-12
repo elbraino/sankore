@@ -124,6 +124,24 @@ const description =
                 )}
 
                 {/*
+                  The event's own site, alongside the entry for it. Named by
+                  event so a screen reader reading down the grid does not hear
+                  seventeen bare hostnames in a row.
+                */}
+                {event.entry.data.website && (
+                  <p class="event-site">
+                    <a
+                      href={event.entry.data.website}
+                      rel="noopener external"
+                      aria-label={`Official site for ${event.entry.data.name}`}
+                    >
+                      <span aria-hidden="true">↗</span>
+                      <span>{new URL(event.entry.data.website).hostname.replace(/^www\./, "")}</span>
+                    </a>
+                  </p>
+                )}
+
+                {/*
                   Requirement: every event links into /works/ filtered to it.
                   The href carries ?event=<slug>, which the filter island reads
                   on load — so this works as a plain link, no JS needed to
@@ -291,6 +309,28 @@ const description =
     font-size: var(--text-sm);
     color: var(--ink-muted);
     margin-block: var(--space-xs) 0;
+  }
+
+  .event-site {
+    margin-block: var(--space-xs) 0;
+  }
+
+  .event-site a {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.3em;
+    max-inline-size: 100%;
+    font-family: var(--face-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-faint);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+
+  .event-site a:hover {
+    color: var(--action-hover);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
   }
 
   .event-works {

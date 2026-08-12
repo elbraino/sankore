@@ -40,6 +40,11 @@
       "type": "array",
       "items": { "type": "string", "pattern": "^CVE-\\d{4}-\\d{4,}$" }
     },
+    "source": {
+      "type": "string",
+      "format": "uri",
+      "description": "Canonical public page this entry was recorded from — the speaker/agenda page, repo index, or advisory that establishes the work exists. Distinct from `links`, which point at the work itself. Promotes the `# Source:` provenance comment into renderable data."
+    },
     "links": {
       "type": "object",
       "additionalProperties": false,

@@ -12,6 +12,18 @@ interface Props {
   title: string;
   /** Rendered under the title: authors, venue, kind — already humanised. */
   meta?: string;
+  /**
+   * Abstract or summary, clamped to two lines. Rows without one simply omit it
+   * rather than rendering an empty-state — most of the archive has no abstract
+   * yet, and 50 "no description recorded" lines would be noise, not information.
+   */
+  description?: string;
+  /**
+   * Provenance: the public page this entry was recorded from. Rendered as a
+   * secondary outbound link so a reader can check the row against its origin
+   * without opening the detail page.
+   */
+  source?: string;
   /** Right-aligned mono figure, e.g. a year or a works count. */
   figure?: string;
   /** Small text under the figure, e.g. "works". */
@@ -22,12 +34,36 @@ interface Props {
   class?: string;
 }
 
-const { plate, href, title, meta, figure, figureLabel, filterData = {}, class: className } =
-  Astro.props;
+const {
+  plate,
+  href,
+  title,
+  meta,
+  description,
+  source,
+  figure,
+  figureLabel,
+  filterData = {},
+  class: className,
+} = Astro.props;
 
 const dataAttrs = Object.fromEntries(
   Object.entries(filterData).map(([key, value]) => [`data-${key}`, value]),
 );
+
+/**
+ * Bare hostname — the whole URL would swamp a row, and the host is what tells a
+ * reader whether provenance is the conference itself, a repo, or a mirror.
+ * Malformed URLs degrade to no link at all rather than throwing the build.
+ */
+let sourceHost: string | undefined;
+if (source) {
+  try {
+    sourceHost = new URL(source).hostname.replace(/^www\./, "");
+  } catch {
+    sourceHost = undefined;
+  }
+}
 ---
 
 <li class:list={["plate-row", className]} {...dataAttrs}>
@@ -36,6 +72,22 @@ const dataAttrs = Object.fromEntries(
   <span class="plate-row-body">
     <a class="plate-row-title" href={href}>{title}</a>
     {meta && <span class="plate-row-meta">{meta}</span>}
+    {description && <span class="plate-row-desc">{description}</span>}
+    {
+      /* A page of bare hostnames is indistinguishable to a screen reader, so
+         each source link is named by the entry it belongs to. */
+      sourceHost && (
+        <a
+          class="plate-row-source"
+          href={source}
+          rel="noopener external"
+          aria-label={`Original source for ${title}, at ${sourceHost}`}
+        >
+          <span aria-hidden="true">↗</span>
+          <span>{sourceHost}</span>
+        </a>
+      )
+    }
     <slot />
   </span>
 
@@ -95,6 +147,40 @@ const dataAttrs = Object.fromEntries(
   .plate-row-meta {
     font-size: var(--text-sm);
     color: var(--ink-muted);
+  }
+
+  /* Two lines: enough to tell a reader what the work is, not enough to turn the
+     index plate into a feed of paragraphs. `--measure` keeps the line length
+     readable on wide screens without a magic pixel width. */
+  .plate-row-desc {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    max-inline-size: var(--measure);
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+    color: var(--ink-muted);
+  }
+
+  .plate-row-source {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.3em;
+    align-self: start;
+    max-inline-size: 100%;
+    font-family: var(--face-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-faint);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+
+  .plate-row-source:hover {
+    color: var(--action-hover);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
   }
 
   .plate-row-figure {

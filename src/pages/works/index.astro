@@ -106,6 +106,8 @@ const description =
               ]
                 .filter(Boolean)
                 .join(" · ")}
+              description={work.entry.data.abstract}
+              source={work.entry.data.source}
               figure={String(work.entry.data.year)}
               figureLabel={WORK_TYPE_LABELS[work.entry.data.type] ?? work.entry.data.type}
               filterData={{
