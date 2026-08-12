@@ -1,4 +1,9 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
+# abstract VERIFIED 2026-08-12 — quoted verbatim from the talk's own recording
+# description on the BSides Cape Town YouTube channel. Boilerplate prefixes
+# ("Title:"/"Abstract:") and any speaker-bio or social-handle trailer are
+# stripped, per CLAUDE.md: no auto-imported personal data. Nothing paraphrased.
 slug: rite-of-passage-2024
 title: "Rite of Passage: My Journey from BSides Volunteer to Black Hat Asia Attendee"
 type: talk
@@ -6,4 +11,17 @@ year: 2024
 authors: [blessing-mufaro-kashava]
 event: bsides-cape-town
 language: en
+abstract: >-
+  From volunteering at BSides Cape Town to being sponsored to attend Black Hat
+  Asia, I'll share my unexpected journey and the power of community
+  involvement in shaping my career in cybersecurity. Through this talk, I aim
+  to inspire students to take that first step into getting involved with the
+  cybersecurity community. In 2023, I volunteered at BSides Cape Town as a way
+  to immerse myself in the cybersecurity community. What I didn't anticipate
+  was that my involvement would lead to an incredible opportunity: being
+  selected for the Rite of Passage Initiative and getting sponsored to attend
+  Black Hat Asia 2024.
+source: https://bsidescapetown.co.za/about-us/past-events/
+links:
+  video: https://www.youtube.com/watch?v=STY4QhsoNU0
 added: 2026-08-10

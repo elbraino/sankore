@@ -1,4 +1,9 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
+# abstract VERIFIED 2026-08-12 — quoted verbatim from the talk's own recording
+# description on the BSides Cape Town YouTube channel. Boilerplate prefixes
+# ("Title:"/"Abstract:") and any speaker-bio or social-handle trailer are
+# stripped, per CLAUDE.md: no auto-imported personal data. Nothing paraphrased.
 slug: ignorantia-juris-non-excusat-2024
 title: "Ignorantia Juris Non Excusat – Understanding the Impact of the Law on the SA Hacker Community"
 type: talk
@@ -6,4 +11,19 @@ year: 2024
 authors: [jason-jordaan]
 event: bsides-cape-town
 language: en
+abstract: >-
+  Many cybersecurity researchers and ethical hackers are becoming the target
+  of criminal prosecutions and litigation, essentially for trying to do the
+  right thing, and acting in an ethical manner. The reality is that
+  cybersecurity researchers, practitioners and ethical hackers do run the risk
+  of running afoul of both criminal and civil law in South Africa. This talk
+  will explore the various laws and legal actions that could impact on them,
+  and how to work within the framework of the law in South Africa, and
+  essentially keep them safe from legal harm. The talk will cover the various
+  activities that cybersecurity researchers, practitioners and ethical hackers
+  undertake, and explore the various legal issues that may impact on these
+  activities.
+source: https://bsidescapetown.co.za/about-us/past-events/
+links:
+  video: https://www.youtube.com/watch?v=8jpp28Oy4tU
 added: 2026-08-10

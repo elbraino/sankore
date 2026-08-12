@@ -1,4 +1,9 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
+# abstract VERIFIED 2026-08-10 — quoted verbatim from the talk's own recording
+# description, youtube.com/watch?v=S9O8WTgTveM. The description's trailing
+# "Speaker:" block (name + Twitter handle) is deliberately NOT imported:
+# CLAUDE.md forbids auto-importing socials, and people are opt-in.
 slug: anomaly-detection-in-container-sandboxing-2018
 title: "Anomaly detection in container sandboxing"
 type: talk
@@ -6,6 +11,12 @@ year: 2018
 authors: [christo-goosen]
 event: bsides-cape-town
 language: en
+abstract: >-
+  Anomaly detection through sand-boxing and network monitoring, for security
+  incident detection of un-trusted code. Talk including google's gvisor and
+  sandboxing kubernetes.
+source: https://bsidescapetown.co.za/about-us/past-events/
 links:
   video: https://www.youtube.com/watch?v=S9O8WTgTveM
+  archive: https://web.archive.org/web/20230221150414/https://www.youtube.com/watch?v=S9O8WTgTveM
 added: 2026-08-10

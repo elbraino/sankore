@@ -1,4 +1,9 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
+# abstract VERIFIED 2026-08-12 — quoted verbatim from the talk's own recording
+# description on the BSides Cape Town YouTube channel. Boilerplate prefixes
+# ("Title:"/"Abstract:") and any speaker-bio or social-handle trailer are
+# stripped, per CLAUDE.md: no auto-imported personal data. Nothing paraphrased.
 slug: put-words-in-my-mouth-2019
 title: "Put Words In My Mouth"
 type: talk
@@ -6,4 +11,16 @@ year: 2019
 authors: [amy-mania]
 event: bsides-cape-town
 language: en
+abstract: >-
+  Money has been withdrawn from your account. You don't remember making, or
+  authorising that transaction. When you follow up with the bank, they say you
+  called earlier and requested the transfer - it was, after-all, you speaking
+  - right? Unbeknownst to you, your voice was stolen, and so was your money.
+  With the rise of voice authentication biometrics, so will the opportunities
+  to spoof it. Text-to-Speech API's are constantly improving, with Google's
+  technology now being indistinguishable from the real human speaker. Threat
+  actors have access to a target's YouTube videos, social media posts.
+source: https://bsidescapetown.co.za/about-us/past-events/
+links:
+  video: https://www.youtube.com/watch?v=4R-g90lplco
 added: 2026-08-10

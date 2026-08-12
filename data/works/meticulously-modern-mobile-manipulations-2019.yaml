@@ -1,4 +1,9 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
+# abstract VERIFIED 2026-08-12 — quoted verbatim from the talk's own recording
+# description on the BSides Cape Town YouTube channel. Boilerplate prefixes
+# ("Title:"/"Abstract:") and any speaker-bio or social-handle trailer are
+# stripped, per CLAUDE.md: no auto-imported personal data. Nothing paraphrased.
 slug: meticulously-modern-mobile-manipulations-2019
 title: "Meticulously Modern Mobile Manipulations"
 type: talk
@@ -6,4 +11,19 @@ year: 2019
 authors: [leon-jacobs]
 event: bsides-cape-town
 language: en
+abstract: >-
+  Mobile app hacking peaked in 2015 with tools like keychain-dumper & ssl-
+  kill-switch released but requiring jailbroken/rooted devices. Back then,
+  wresting the power to understand & modify apps on our devices from dystopian
+  looking mega corps was our cause. As jailbreaks became infrequent, the
+  hackers' arsenal was left behind. While this is progress against dark uses
+  of hacking, done to protect our freedom fighters, how can hackers still hold
+  power to account? Can we still find flaws in apps/devices & live up to the
+  protections the technology promises? Enter runtime binary instrumentation
+  with Frida. It's possible to analyze apps in their final state when executed
+  on real hardware running the latest iOS/Android with no jailbreaks. This
+  fills a gap between source analysis & debuggers.
+source: https://bsidescapetown.co.za/about-us/past-events/
+links:
+  video: https://www.youtube.com/watch?v=_un-_C-Mfzo
 added: 2026-08-10

@@ -1,4 +1,9 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
+# abstract VERIFIED 2026-08-12 — quoted verbatim from the talk's own recording
+# description on the BSides Cape Town YouTube channel. Boilerplate prefixes
+# ("Title:"/"Abstract:") and any speaker-bio or social-handle trailer are
+# stripped, per CLAUDE.md: no auto-imported personal data. Nothing paraphrased.
 slug: attacking-pipelines-workflow-files-2024
 title: "Attacking Pipelines: Large Scale Exploitation of Workflow Files"
 type: talk
@@ -6,4 +11,20 @@ year: 2024
 authors: [david-baker-effendi, rohan-dayaram]
 event: bsides-cape-town
 language: en
+abstract: >-
+  In this talk, we present a tool designed to perform large-scale scanning of
+  GitHub repositories to identify potential expression injection
+  vulnerabilities within their workflow files. Our system efficiently scrapes
+  repositories, concurrently pulling and analysing workflow configurations for
+  insecure patterns. Through this mining process, we have discovered that
+  expression injection vulnerabilities are surprisingly prevalent, even among
+  popular projects, and often go unnoticed. We have reached out to affected
+  vendors for remediation and hypothesis this prevalence attributed to a lack
+  of in detection mechanisms and key documentation on GitHub's end.
+  Additionally, we found that even when vulnerabilities are patched, they can
+  be easily reintroduced by interpolating sanitised values.
+source: https://bsidescapetown.co.za/about-us/past-events/
+links:
+  video: https://www.youtube.com/watch?v=UPK1WzIaShg
+  archive: https://web.archive.org/web/20260812131839/https://www.youtube.com/watch?v=UPK1WzIaShg
 added: 2026-08-10

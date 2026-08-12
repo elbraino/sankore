@@ -1,4 +1,9 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
+# abstract VERIFIED 2026-08-12 — quoted verbatim from the talk's own recording
+# description on the BSides Cape Town YouTube channel. Boilerplate prefixes
+# ("Title:"/"Abstract:") and any speaker-bio or social-handle trailer are
+# stripped, per CLAUDE.md: no auto-imported personal data. Nothing paraphrased.
 slug: attacking-graphql-2024
 title: "Attacking GraphQL: A guide for penetration testers"
 type: talk
@@ -6,4 +11,18 @@ year: 2024
 authors: [keith-makan]
 event: bsides-cape-town
 language: en
+abstract: >-
+  Whats GraphQL? How do pwn it? And what do I write in my pentest report if I
+  get this in a test? If these questions get your heart racing, fret not, this
+  stalk is for you! GraphQL is at minimum, yet another API technology your
+  company can get horribly wrong. The technology has grown considerably has an
+  API interface technology in the last few years. With the growing interest,
+  security engineering has been a keen focus for deployments because the
+  technology is new, promises a lot (i.e. strict data typing, query batching
+  and nesting, rapid adaptability etc.) and may not deliver the same impact in
+  all environments or use cases.
+source: https://bsidescapetown.co.za/about-us/past-events/
+links:
+  video: https://www.youtube.com/watch?v=Athvgi9QAdk
+  archive: https://web.archive.org/web/20260812131827/https://www.youtube.com/watch?v=Athvgi9QAdk
 added: 2026-08-10

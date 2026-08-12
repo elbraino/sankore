@@ -1,4 +1,7 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
+# abstract VERIFIED 2026-08-10 — quoted verbatim from the "Abstract:" section of
+# the talk's own recording description, youtube.com/watch?v=YNDhiH04iXw.
 slug: impose-cost-2023
 title: "Impose Cost"
 type: talk
@@ -6,6 +9,15 @@ year: 2023
 authors: [singe]
 event: bsides-cape-town
 language: en
+abstract: >-
+  The best defence is a good offence - except in cybersecurity where we send
+  people to the battlefield with armour and radios. The most active defence gets
+  is evicting attackers from their network. We've leaned in so hard into defence
+  as an industry we're lying on the floor, and it's time to look up. But, how can
+  we take the fight to the criminals, without crossing legal and ethical
+  boundaries?
+source: https://bsidescapetown.co.za/about-us/past-events/
 links:
   video: https://www.youtube.com/watch?v=YNDhiH04iXw
+  archive: https://web.archive.org/web/20260621024717/https://www.youtube.com/watch?v=YNDhiH04iXw
 added: 2026-08-10

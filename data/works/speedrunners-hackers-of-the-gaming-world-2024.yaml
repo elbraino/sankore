@@ -1,4 +1,9 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
+# abstract VERIFIED 2026-08-12 — quoted verbatim from the talk's own recording
+# description on the BSides Cape Town YouTube channel. Boilerplate prefixes
+# ("Title:"/"Abstract:") and any speaker-bio or social-handle trailer are
+# stripped, per CLAUDE.md: no auto-imported personal data. Nothing paraphrased.
 slug: speedrunners-hackers-of-the-gaming-world-2024
 title: "SpeedRunners: The Hackers of the Gaming World"
 type: talk
@@ -6,4 +11,18 @@ year: 2024
 authors: [nunudzai-mrewa]
 event: bsides-cape-town
 language: en
+abstract: >-
+  Speedrunning, the art of completing games with incredible speed, has evolved
+  into more than a gaming feat - it's a showcase of ingenuity, creativity, and
+  technical prowess. This talk delves into the fascinating world of
+  speedrunners, drawing parallels between their methodologies and those of
+  cybersecurity professionals, while highlighting the significant impact on
+  game development and software security. We'll explore how speedrunners
+  discover and exploit glitches in games through a combination of accident,
+  experimentation, and deep code analysis - skills that mirror the
+  vulnerability hunting process in software security.
+source: https://bsidescapetown.co.za/about-us/past-events/
+links:
+  video: https://www.youtube.com/watch?v=8FVMCNgM7Fc
+  archive: https://web.archive.org/web/20260812132228/https://www.youtube.com/watch?v=8FVMCNgM7Fc
 added: 2026-08-10

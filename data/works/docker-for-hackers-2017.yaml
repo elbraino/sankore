@@ -1,4 +1,5 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
 slug: docker-for-hackers-2017
 title: "Docker for Hackers"
 type: talk
@@ -6,4 +7,8 @@ year: 2017
 authors: [ross-simpson]
 event: bsides-cape-town
 language: en
+source: https://bsidescapetown.co.za/about-us/past-events/
+links:
+  video: https://www.youtube.com/watch?v=GaUhGIR8ij8
+  archive: https://web.archive.org/web/20230221150417/https://www.youtube.com/watch?v=GaUhGIR8ij8
 added: 2026-08-10

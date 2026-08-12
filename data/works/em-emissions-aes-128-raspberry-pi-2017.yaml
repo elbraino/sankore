@@ -1,4 +1,5 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
 slug: em-emissions-aes-128-raspberry-pi-2017
 title: "Using Electromagnetic Emissions to Intercept AES-128 Cryptographic Keys from a Raspberry Pi"
 type: talk
@@ -6,4 +7,5 @@ year: 2017
 authors: [ibraheem-frieslaar]
 event: bsides-cape-town
 language: en
+source: https://bsidescapetown.co.za/about-us/past-events/
 added: 2026-08-10

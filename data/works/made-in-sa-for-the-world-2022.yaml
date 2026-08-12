@@ -1,4 +1,5 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
 slug: made-in-sa-for-the-world-2022
 title: "Made in SA – For the World"
 type: talk
@@ -6,6 +7,8 @@ year: 2022
 authors: [haroon-meer]
 event: bsides-cape-town
 language: en
+source: https://bsidescapetown.co.za/about-us/past-events/
 links:
   video: https://www.youtube.com/watch?v=qBgTe3UrcvA
+  archive: https://web.archive.org/web/20260812131918/https://www.youtube.com/watch?v=qBgTe3UrcvA
 added: 2026-08-10

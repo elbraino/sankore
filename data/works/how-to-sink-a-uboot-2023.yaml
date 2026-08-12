@@ -1,4 +1,9 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
+# abstract VERIFIED 2026-08-12 — quoted verbatim from the talk's own recording
+# description on the BSides Cape Town YouTube channel. Boilerplate prefixes
+# ("Title:"/"Abstract:") and any speaker-bio or social-handle trailer are
+# stripped, per CLAUDE.md: no auto-imported personal data. Nothing paraphrased.
 slug: how-to-sink-a-uboot-2023
 title: "How to sink a UBoot: Understanding bootloader attack surface"
 type: talk
@@ -6,4 +11,19 @@ year: 2023
 authors: [keith-makan]
 event: bsides-cape-town
 language: en
+abstract: >-
+  Uboot is arguably the defacto standard for providing adaptable bootloader
+  environments for a plethora of infrastructures. Unfortunately some of the
+  configuration options may expose vulnerabilities which compromise
+  environments and may allow attackers to take control during privileged
+  contexts. The talk included here will cover some of the Uboot basics, detail
+  some architectural aspects of modern bootloaders as well as ways an eager
+  hacker can exploit Uboot in order to drop a shell and take control.
+  Bootloaders are an obscure part of the operating system, they load the
+  operating system, setup up the hardware and present us with a working,
+  running machine all out of sight and out of mind.
+source: https://bsidescapetown.co.za/about-us/past-events/
+links:
+  video: https://www.youtube.com/watch?v=GKSHAe--7V0
+  archive: https://web.archive.org/web/20260621024725/https://www.youtube.com/watch?v=GKSHAe--7V0
 added: 2026-08-10
