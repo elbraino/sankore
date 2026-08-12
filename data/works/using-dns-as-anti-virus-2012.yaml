@@ -1,0 +1,29 @@
+# Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
+#
+# YEAR CORRECTED 2026-08-12: 2013 → 2012, and the slug renamed to match
+# (was using-dns-as-anti-virus-2013). THE EVIDENCE HERE IS SINGLE-SOURCE —
+# weaker than the other two year corrections in this dataset, and recorded as
+# such deliberately. The whole basis is that on
+# bsidescapetown.co.za/about-us/past-events/ the entry "Using DNS as
+# Anti-virus" sits inside the page section whose only year is 2012, read from
+# the live DOM rather than from flattened text (flattening reorders this
+# page's accordion and misattributes talks). Nothing corroborates it: there is
+# no recording of this talk on the BSides Cape Town YouTube channel, so no
+# video title and no playlist year exist to check it against. Compare
+# mallet-intercepting-proxy-2018 (three independent signals) and
+# sensepost-xrdp-tool-2016 (two).
+# The DOM method was validated against seven talks whose years are
+# independently known before being trusted, but a validated method applied
+# once is still a single reading — if any second source ever contradicts this,
+# that source should win. Permitted under GOVERNANCE.md "Data integrity":
+# slugs are immutable only after public launch.
+slug: using-dns-as-anti-virus-2012
+title: "Using DNS as Anti-virus"
+type: talk
+year: 2012
+authors: [etienne-staalmans]
+event: bsides-cape-town
+language: en
+source: https://bsidescapetown.co.za/about-us/past-events/
+added: 2026-08-10
