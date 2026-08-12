@@ -26,7 +26,7 @@ YAML file carries a `# Source:` comment naming which one.
 | `github.com/msuiche/OPCDE` — organiser's own repo, talks by year | OPCDE Dubai + Kenya talk/speaker pairings |
 | `kenya.opcde.com/speakers.html` | Amat Cama (Senegal, stated), Charles Muiruri |
 | `emirates.opcde.com/agenda/` | WhatsApp Digger — four Saudi authors, university affiliation stated |
-| `bsidescapetown.co.za/about-us/past-events/` | 37 works, 2013–2024 |
+| `bsidescapetown.co.za/about-us/past-events/` | 37 works, 2012–2024 |
 | BSides Cape Town talk videos on YouTube | Per-talk source URLs, recorded in `links.video` |
 
 ## Verified event metadata only (no talk-level data yet)

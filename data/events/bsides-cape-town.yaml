@@ -1,6 +1,21 @@
-# VERIFIED 2026-08-10 — bsidescapetown.co.za "Past Events" archive (2013-2024).
-# first_year omitted: source gives "~2011/2012", too imprecise to assert.
+# VERIFIED 2026-08-10 — bsidescapetown.co.za "Past Events" archive (2012-2024).
 # No editions were held in 2020 or 2021.
+#
+# first_year ADDED 2026-08-12. It was omitted at seed time because the site's
+# own copy gives the start as "~2011/2012", too imprecise to assert. Two things
+# now put an edition in 2012:
+#   1. the past-events page carries a 2012 section, read from the live DOM
+#      rather than from flattened page text — flattening reorders that page's
+#      accordion and misattributes talks. The DOM method was validated against
+#      seven talks whose years are independently known before being trusted.
+#   2. this index now holds a work placed in that year on the same evidence,
+#      using-dns-as-anti-virus-2012.
+# Note that (2) is not independent of (1): both rest on the same reading of the
+# same page, so this is one line of evidence with two consequences, not two.
+# Read 2012 as the earliest edition this index can evidence rather than as proof
+# that no earlier one ran — "~2011/2012" leaves 2011 open and nothing here rules
+# it out. The event pages render first_year as "since 2012"; if a 2011 edition
+# is ever evidenced, this moves.
 slug: bsides-cape-town
 name: BSides Cape Town
 kind: bsides
@@ -8,8 +23,9 @@ country: ZA
 city: Cape Town
 website: https://bsidescapetown.co.za
 status: active
+first_year: 2012
 languages: [en]
 description: >
   Community-run Security BSides chapter in Cape Town, publishing a complete
-  public talk archive going back to 2013. The backbone of Southern African
+  public talk archive going back to 2012. The backbone of Southern African
   representation in this index.
