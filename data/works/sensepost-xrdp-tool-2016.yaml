@@ -1,0 +1,38 @@
+# Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
+# abstract VERIFIED 2026-08-12 — quoted verbatim from the talk's own recording
+# description on the BSides Cape Town YouTube channel. Boilerplate prefixes
+# ("Title:"/"Abstract:") and any speaker-bio or social-handle trailer are
+# stripped, per CLAUDE.md: no auto-imported personal data. Nothing paraphrased.
+#
+# YEAR CORRECTED 2026-08-12: 2017 → 2016, and the slug renamed to match
+# (was sensepost-xrdp-tool-2017). Two independent sources agree:
+#   1. the recording sits in the channel's "BSides Cape Town 2016" playlist:
+#      https://www.youtube.com/watch?v=Z64bHhoc3bY
+#   2. on bsidescapetown.co.za/about-us/past-events/ the entry "Thomas Underhay
+#      & Darryn Cull – SensePost XRDP Tool" sits inside the page section whose
+#      only year is 2016 (read from the live DOM, not from flattened text —
+#      flattening reorders this page's accordion and misattributes talks).
+# The DOM method was validated against seven talks whose years are independently
+# known before being trusted here. Permitted under GOVERNANCE.md "Data
+# integrity": slugs are immutable only after public launch.
+slug: sensepost-xrdp-tool-2016
+title: "SensePost XRDP Tool"
+type: tool
+year: 2016
+authors: [thomas-underhay, darryn-cull]
+event: bsides-cape-town
+language: en
+abstract: >-
+  In this talk, we'll cover how an X server functions, how one becomes
+  vulnerable, previous methods of exploitation, and finally the developed tool
+  as well as how it works and what it provides. In 1997, a vulnerability in
+  X11 was released that allowed unauthenticated access to the X server due to
+  access controls being disabled [1]. This vulnerability gives an attacker
+  full control of the target host using the default X toolset developed to
+  work using the protocol. Given the age of this vulnerability, it is still
+  being found while on internal penetration tests and even on the Internet.
+source: https://bsidescapetown.co.za/about-us/past-events/
+links:
+  video: https://www.youtube.com/watch?v=Z64bHhoc3bY
+added: 2026-08-10
