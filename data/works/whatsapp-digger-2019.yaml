@@ -1,4 +1,8 @@
 # Source: emirates.opcde.com/agenda/
+# Repo path VERIFIED 2026-08-13 (HTTP 200 on both URLs below): `source` was
+# the repo root, identical for all six OPCDE entries and useless as a link to
+# this session. It now points at the directory that lists this talk, and
+# links.slides at the talk's own deck.
 slug: whatsapp-digger-2019
 title: "WhatsApp Digger"
 type: tool
@@ -6,5 +10,7 @@ year: 2019
 authors: [deemah-alotaibi, lamyaa-alsaleem, malak-aldakheel, sarah-alqhtani]
 event: opcde
 language: en
-source: https://github.com/msuiche/OPCDE
+source: https://github.com/msuiche/OPCDE/tree/master/2019/Emirates
+links:
+  slides: https://github.com/msuiche/OPCDE/blob/master/2019/Emirates/WhatsApp%20Digger%20-%20Deemah,%20Lamyaa,%20Malak,%20Sarah.pdf
 added: 2026-08-10

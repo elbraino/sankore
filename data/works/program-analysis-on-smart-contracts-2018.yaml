@@ -1,4 +1,8 @@
 # Source: github.com/msuiche/OPCDE
+# Repo path VERIFIED 2026-08-13 (HTTP 200 on both URLs below): `source` was
+# the repo root, identical for all six OPCDE entries and useless as a link to
+# this session. It now points at the directory that lists this talk, and
+# links.slides at the talk's own deck.
 slug: program-analysis-on-smart-contracts-2018
 title: "Program Analysis on Smart Contracts"
 type: talk
@@ -6,5 +10,7 @@ year: 2018
 authors: [jp-smith]
 event: opcde-kenya
 language: en
-source: https://github.com/msuiche/OPCDE
+source: https://github.com/msuiche/OPCDE/tree/master/2018/Kenya
+links:
+  slides: https://github.com/msuiche/OPCDE/blob/master/2018/Kenya/JP%20Smith%20-%20Smart%20Contract%20Program%20Analysis.pdf
 added: 2026-08-10

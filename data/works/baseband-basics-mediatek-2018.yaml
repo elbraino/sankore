@@ -1,4 +1,8 @@
 # Source: kenya.opcde.com/speakers.html
+# Repo path VERIFIED 2026-08-13 (HTTP 200 on both URLs below): `source` was
+# the repo root, identical for all six OPCDE entries and useless as a link to
+# this session. It now points at the directory that lists this talk, and
+# links.slides at the talk's own deck.
 slug: baseband-basics-mediatek-2018
 title: "The Baseband Basics: Understanding, Debugging and Pwning the Mediatek Communication Processor"
 type: talk
@@ -6,5 +10,7 @@ year: 2018
 authors: [nitay-artenstein, charles-muiruri]
 event: opcde-kenya
 language: en
-source: https://github.com/msuiche/OPCDE
+source: https://github.com/msuiche/OPCDE/tree/master/2018/Kenya
+links:
+  slides: https://github.com/msuiche/OPCDE/blob/master/2018/Kenya/Charles%20Nitay%20Anna%20-%20The%20Baseband%20Basics.pdf
 added: 2026-08-10
