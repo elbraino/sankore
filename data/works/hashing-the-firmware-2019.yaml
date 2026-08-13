@@ -1,4 +1,9 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
+# abstract VERIFIED 2026-08-12 — quoted verbatim from the talk's own recording
+# description on the BSides Cape Town YouTube channel. Boilerplate prefixes
+# ("Title:"/"Abstract:") and any speaker-bio or social-handle trailer are
+# stripped, per CLAUDE.md: no auto-imported personal data. Nothing paraphrased.
 slug: hashing-the-firmware-2019
 title: "Hashing the $#!+ out of firmware"
 type: talk
@@ -6,4 +11,20 @@ year: 2019
 authors: [brent-shaw]
 event: bsides-cape-town
 language: en
+abstract: >-
+  Everything is broken... But is it possible that more things are more broken
+  than we though? Probably. But lets look at that. When it comes to embedded
+  devices, we rely largely on the OEM manufacturer to provide firmware and
+  firmware updates. These updates could be issued for a number of reasons:
+  better performance, improved feature set, bug fixes, and security patches.
+  But when you download a firmware update, you generally only have the
+  manufacturer's word that it does what it says, with information sometime
+  being provided in the change-log. But these change logs don't always tell
+  all. This research looks at pulling firmware apart to see whats inside, and
+  comparing firmwares to see what might have changed (between versions), and
+  what might be getting reused (between different devices).
+source: https://bsidescapetown.co.za/about-us/past-events/
+links:
+  video: https://www.youtube.com/watch?v=6GwDseil40M
+  archive: https://web.archive.org/web/20230221150417/https://www.youtube.com/watch?v=6GwDseil40M
 added: 2026-08-10

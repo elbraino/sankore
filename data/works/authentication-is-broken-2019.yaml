@@ -1,4 +1,9 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
+# abstract VERIFIED 2026-08-12 — quoted verbatim from the talk's own recording
+# description on the BSides Cape Town YouTube channel. Boilerplate prefixes
+# ("Title:"/"Abstract:") and any speaker-bio or social-handle trailer are
+# stripped, per CLAUDE.md: no auto-imported personal data. Nothing paraphrased.
 slug: authentication-is-broken-2019
 title: "Authentication is Broken. Can We Try Fix It?"
 type: talk
@@ -6,4 +11,19 @@ year: 2019
 authors: [kgothatso-ngako]
 event: bsides-cape-town
 language: en
+abstract: >-
+  This talk seeks to demonstrate how the hardened derivation of hierarchically
+  deterministic asymmetric keys can be used as an authentication mechanism
+  that sites could use to replace the passwords. As anyone who frequents
+  haveibeenpwned would know, password reuse is a major problem that is
+  worsened by inevitable data leakages. Without the use of a password manager
+  a person is prone to reuse a password at least once (or risk forgetting
+  their password if they try to be clever by coming up with a new password for
+  every site). In this proposed authentication mechanism sites would store
+  xpubs instead of passwords. The xpubs would be used to derive public keys
+  when authenticating users.
+source: https://bsidescapetown.co.za/about-us/past-events/
+links:
+  video: https://www.youtube.com/watch?v=Qh7LalY6h4c
+  archive: https://web.archive.org/web/20230221150414/https://www.youtube.com/watch?v=Qh7LalY6h4c
 added: 2026-08-10

@@ -1,4 +1,9 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
+# abstract VERIFIED 2026-08-12 — quoted verbatim from the talk's own recording
+# description on the BSides Cape Town YouTube channel. Boilerplate prefixes
+# ("Title:"/"Abstract:") and any speaker-bio or social-handle trailer are
+# stripped, per CLAUDE.md: no auto-imported personal data. Nothing paraphrased.
 slug: ai-in-osint-zero-snake-oil-2024
 title: "AI in OSINT – Zero snake oil"
 type: talk
@@ -6,4 +11,18 @@ year: 2024
 authors: [roelof-temmingh]
 event: bsides-cape-town
 language: en
+abstract: >-
+  In this blink-and-you'll-miss-it talk we cut all the introductions and
+  waffle and, just like this abstract, get straight to the point :) Can we use
+  AI in OSINT? Spoiler - yes and its pretty magical. We'll show, on screen,
+  how AI helped solved real(ish) world cases. That's it. In the talk, I'll
+  demo how we've build software that uses RAG AI to create an assistant that
+  you can query about (deep, eg post authentication) web pages. I will show
+  how the software works and then I will show results that were interesting.
+  I'll end the talk with my predictions on how AI will impact OSINT in the
+  near future.
+source: https://bsidescapetown.co.za/about-us/past-events/
+links:
+  video: https://www.youtube.com/watch?v=plZ4afy6wv0
+  archive: https://web.archive.org/web/20260621044133/https://www.youtube.com/watch?v=plZ4afy6wv0
 added: 2026-08-10

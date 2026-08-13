@@ -1,0 +1,42 @@
+# Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
+# abstract VERIFIED 2026-08-12 — quoted verbatim from the talk's own recording
+# description on the BSides Cape Town YouTube channel. Boilerplate prefixes
+# ("Title:"/"Abstract:") and any speaker-bio or social-handle trailer are
+# stripped, per CLAUDE.md: no auto-imported personal data. Nothing paraphrased.
+#
+# YEAR CORRECTED 2026-08-12: 2019 → 2018, and the slug renamed to match
+# (was mallet-intercepting-proxy-2019). The recording states the year in its own
+# title — "BSides Cape Town 2018 - Mallet - an Intercepting Proxy for Arbitrary
+# protocols" — and it sits in the channel's "BSides Cape Town 2018" playlist:
+# https://www.youtube.com/watch?v=3vG-CiM__mw
+# Three independent signals agree: the video title, the 2018 playlist it is
+# filed under, and bsidescapetown.co.za/about-us/past-events/ itself, where
+# "Rogan Dawes – Mallet – an intercepting proxy for arbitrary protocols" sits
+# inside the page section whose only year is 2018 (read from the live DOM —
+# flattening this page's accordion to text reorders it and misattributes talks,
+# so the flat reading is not evidence either way). The DOM method was validated
+# against seven talks whose years are independently known before being trusted
+# here. Permitted under GOVERNANCE.md "Data integrity": slugs are immutable only
+# after public launch.
+slug: mallet-intercepting-proxy-2018
+title: "Mallet – an intercepting proxy for arbitrary protocols"
+type: talk
+year: 2018
+authors: [rogan-dawes]
+event: bsides-cape-town
+language: en
+abstract: >-
+  In this talk, I will focus on a new open-source intercepting proxy named
+  Mallet, based on the mature and high-performance Netty framework, that wraps
+  it with a drag and drop graph-based graphical user interface and a
+  datastore. In doing so, we gain access to an existing library of protocol
+  implementations, including TLS (and SNI), various compression algorithms,
+  HTTP, HTTP/2, MQTT, REDIS, and many others, and most important, an existing
+  community of developers creating new protocol decoders and encoders, and the
+  associated body of knowledge in this area.
+source: https://bsidescapetown.co.za/about-us/past-events/
+links:
+  video: https://www.youtube.com/watch?v=3vG-CiM__mw
+  archive: https://web.archive.org/web/20260812131236/https://www.youtube.com/watch?v=3vG-CiM__mw
+added: 2026-08-10

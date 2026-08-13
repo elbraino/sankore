@@ -1,4 +1,9 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
+# abstract VERIFIED 2026-08-12 — quoted verbatim from the talk's own recording
+# description on the BSides Cape Town YouTube channel. Boilerplate prefixes
+# ("Title:"/"Abstract:") and any speaker-bio or social-handle trailer are
+# stripped, per CLAUDE.md: no auto-imported personal data. Nothing paraphrased.
 slug: securing-a-derivatives-platform-2023
 title: "Securing a Derivatives Platform With Over $25b Volume"
 type: talk
@@ -6,4 +11,18 @@ year: 2023
 authors: [kyle-riley]
 event: bsides-cape-town
 language: en
+abstract: >-
+  How would you approach exploiting a derivatives market? We'll explore how we
+  secured a perpetuals market averaging north of $100m in daily volume. It'll
+  be a technical deep dive beyond traditional pentesting concerns, focusing on
+  abusing game theory and economic models for profit. In the high-stakes world
+  of smart contracts, a single overlooked flaw could result in an
+  instantaneous multi-million dollar loss. The talk will be based on
+  experience gained through security reviews iosiro has performed of
+  Synthetix's Perpetual markets. The code, infrastructure, and assessment
+  results are all public, so we can give deep insights into our learnings.
+source: https://bsidescapetown.co.za/about-us/past-events/
+links:
+  video: https://www.youtube.com/watch?v=w-3aeMUSFao
+  archive: https://web.archive.org/web/20260812132129/https://www.youtube.com/watch?v=w-3aeMUSFao
 added: 2026-08-10

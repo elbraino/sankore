@@ -1,4 +1,9 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
+# abstract VERIFIED 2026-08-12 — quoted verbatim from the talk's own recording
+# description on the BSides Cape Town YouTube channel. Boilerplate prefixes
+# ("Title:"/"Abstract:") and any speaker-bio or social-handle trailer are
+# stripped, per CLAUDE.md: no auto-imported personal data. Nothing paraphrased.
 slug: machine-learning-ai-reduce-cyber-attacks-2019
 title: "How machine learning and AI can help reduce the cyber-attacks"
 type: talk
@@ -6,4 +11,20 @@ year: 2019
 authors: [silent-dzikiti]
 event: bsides-cape-town
 language: en
+abstract: >-
+  According to Global cyber security company Kaspersky Lab South Africans have
+  once again been warned to be careful in cyberspace with a 22% increase in
+  malware attacks in the country in the first quarter of this year. It seems
+  that every presentation from every security vendor begins with an
+  introductory slide explaining how the number and complexity of attacks an
+  organization faces have continued to grow exponentially. Of course, everyone
+  from security operations center (SOC) analysts, who are drowning in alerts,
+  to chief information security officers (CISOs), who are desperately trying
+  to make sense of the trends in security, is acutely aware of the situation.
+  The question is how do we, collectively, solve the problem of overwhelmed
+  security teams?
+source: https://bsidescapetown.co.za/about-us/past-events/
+links:
+  video: https://www.youtube.com/watch?v=Coj2ltDpi8Y
+  archive: https://web.archive.org/web/20230221150417/https://www.youtube.com/watch?v=Coj2ltDpi8Y
 added: 2026-08-10

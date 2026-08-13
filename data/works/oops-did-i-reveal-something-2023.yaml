@@ -1,4 +1,9 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
+# abstract VERIFIED 2026-08-12 — quoted verbatim from the talk's own recording
+# description on the BSides Cape Town YouTube channel. Boilerplate prefixes
+# ("Title:"/"Abstract:") and any speaker-bio or social-handle trailer are
+# stripped, per CLAUDE.md: no auto-imported personal data. Nothing paraphrased.
 slug: oops-did-i-reveal-something-2023
 title: "Oops!!!…did I reveal something?"
 type: talk
@@ -6,4 +11,17 @@ year: 2023
 authors: [javan-mnjama]
 event: bsides-cape-town
 language: en
+abstract: >-
+  Protect your Azure infrastructure from insecure secrets in deployment
+  templates with deployment grazor - an Azure PowerShell script that detects
+  potential misconfigurations and leaked secrets. Infrastructure as Code (IaC)
+  has been a valuable tool in the arsenal of DevOps teams globally. IaC tools
+  such as Bicep and Terraform promote speed and consistency of deployments.
+  These tools and associated deployment templates are typically leveraged in
+  environments requiring large scale infrastructure. In Microsoft Azure,
+  deployment templates are static files written in JSON, and used to define
+  the configuration of a deployed resource.
+source: https://bsidescapetown.co.za/about-us/past-events/
+links:
+  video: https://www.youtube.com/watch?v=2297BXMTdCg
 added: 2026-08-10

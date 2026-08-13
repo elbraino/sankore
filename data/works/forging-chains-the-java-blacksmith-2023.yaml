@@ -1,4 +1,9 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
+# abstract VERIFIED 2026-08-12 — quoted verbatim from the talk's own recording
+# description on the BSides Cape Town YouTube channel. Boilerplate prefixes
+# ("Title:"/"Abstract:") and any speaker-bio or social-handle trailer are
+# stripped, per CLAUDE.md: no auto-imported personal data. Nothing paraphrased.
 slug: forging-chains-the-java-blacksmith-2023
 title: "Forging Chains: The Java Blacksmith"
 type: talk
@@ -6,4 +11,19 @@ year: 2023
 authors: [fabian-yamaguchi, david-baker-effendi]
 event: bsides-cape-town
 language: en
+abstract: >-
+  We present a tool to automatically extract gadget chains from arbitrary
+  combinations of classes on the Java class path - outside the lab
+  environment. The aim is to demonstrate that patching chains makes no sense:
+  deserializing arbitrary attacker-controlled objects is the vulnerability,
+  not the chain. When a program is found to write past the bounds of its
+  buffer, developers will eagerly fix the buffer overflow, whether proven to
+  be exploitable or not. In contrast, when it is found to deserialize
+  arbitrary attacker-controlled objects, you will find that developers would
+  like to hold on to this particularly flexible way of passing objects between
+  processes because it is a feature they love and cherish.
+source: https://bsidescapetown.co.za/about-us/past-events/
+links:
+  video: https://www.youtube.com/watch?v=8qo0ZGK0tt0
+  archive: https://web.archive.org/web/20240124061951/https://www.youtube.com/watch?v=8qo0ZGK0tt0
 added: 2026-08-10

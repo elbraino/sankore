@@ -1,4 +1,5 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
 slug: securing-a-cloud-native-core-banking-system-2022
 title: "Securing a cloud native open source microservice based core banking system"
 type: talk
@@ -6,4 +7,7 @@ year: 2022
 authors: [ntando-mngomezulu]
 event: bsides-cape-town
 language: en
+source: https://bsidescapetown.co.za/about-us/past-events/
+links:
+  video: https://www.youtube.com/watch?v=qwtF9EFWiAY
 added: 2026-08-10

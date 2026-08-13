@@ -22,10 +22,18 @@ const LINK_LABELS: Record<string, string> = {
   archive: "Archived copy",
 };
 
+/*
+ * `links` point at the work itself; `source` points at the page the entry was
+ * recorded from. Both belong under "Sources", but provenance goes last and is
+ * labelled as such — it is evidence the entry is accurate, not another way to
+ * consume the work.
+ */
 const links = Object.entries(data.links ?? {}).filter(([, href]) => Boolean(href)) as [
   string,
   string,
 ][];
+
+const sourceHost = data.source ? new URL(data.source).hostname.replace(/^www\./, "") : undefined;
 
 const typeLabel = WORK_TYPE_LABELS[data.type] ?? data.type;
 const description = data.abstract?.slice(0, 200) ?? `${typeLabel} (${data.year}) indexed in the archive.`;
@@ -103,7 +111,7 @@ const description = data.abstract?.slice(0, 200) ?? `${typeLabel} (${data.year})
     }
 
     {
-      links.length > 0 && (
+      (links.length > 0 || data.source) && (
         <section class="work-links">
           <h2 class="label">Sources</h2>
           <ul>
@@ -115,6 +123,14 @@ const description = data.abstract?.slice(0, 200) ?? `${typeLabel} (${data.year})
                 <span class="work-link-host">{new URL(href).hostname.replace(/^www\./, "")}</span>
               </li>
             ))}
+            {data.source && (
+              <li>
+                <a href={data.source} rel="noopener external">
+                  Where this entry came from
+                </a>
+                <span class="work-link-host">{sourceHost}</span>
+              </li>
+            )}
           </ul>
           {!data.links?.archive && (
             <p class="work-archive-note">

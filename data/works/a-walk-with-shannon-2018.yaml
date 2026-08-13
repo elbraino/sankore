@@ -1,4 +1,8 @@
 # Source: kenya.opcde.com/speakers.html
+# Repo path VERIFIED 2026-08-13 (HTTP 200 on both URLs below): `source` was
+# the repo root, identical for all six OPCDE entries and useless as a link to
+# this session. It now points at the directory that lists this talk, and
+# links.slides at the talk's own deck.
 slug: a-walk-with-shannon-2018
 title: "A Walk With Shannon: A walkthrough of a PWN2OWN Baseband exploit"
 type: talk
@@ -6,4 +10,7 @@ year: 2018
 authors: [amat-cama]
 event: opcde-kenya
 language: en
+source: https://github.com/msuiche/OPCDE/tree/master/2018/Kenya
+links:
+  slides: https://github.com/msuiche/OPCDE/blob/master/2018/Kenya/Amat%20Cama%20-%20A%20Walk%20With%20Shannon-%20A%20walkthrough%20of%20a%20PWN2OWN%20Baseband%20exploit.pdf
 added: 2026-08-10

@@ -1,4 +1,8 @@
 # Source: github.com/msuiche/OPCDE
+# Repo path VERIFIED 2026-08-13 (HTTP 200 on both URLs below): `source` was
+# the repo root, identical for all six OPCDE entries and useless as a link to
+# this session. It now points at the directory that lists this talk, and
+# links.slides at the talk's own deck.
 slug: stranger-danger-2017
 title: "Stranger Danger"
 type: talk
@@ -6,4 +10,7 @@ year: 2017
 authors: [mohamed-saher, ahmed-garhy, nikita-tarakanov]
 event: opcde
 language: en
+source: https://github.com/msuiche/OPCDE/tree/master/2017/Stranger%20Danger%20-%20Mohamed%20Saher,%20Ahmed%20Garhy,%20Nikita%20Tarakanov
+links:
+  slides: https://github.com/msuiche/OPCDE/blob/master/2017/Stranger%20Danger%20-%20Mohamed%20Saher,%20Ahmed%20Garhy,%20Nikita%20Tarakanov/stranger_danger_msaher_agarhy_ntarakanov.pdf
 added: 2026-08-10

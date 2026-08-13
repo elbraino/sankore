@@ -1,10 +1,32 @@
 ---
 import FilterBar, { type FilterGroup } from "../../components/FilterBar.astro";
-import IndexPlate from "../../components/IndexPlate.astro";
+import IndexPlate, { type LinkKind } from "../../components/IndexPlate.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { countryName, loadArchive, WORK_TYPE_LABELS } from "../../lib/atlas";
 
 const { works } = await loadArchive();
+
+/**
+ * Which link a row offers, best first. Recording and deck are the session
+ * itself; code, paper and advisory are what it produced. `archive` is
+ * deliberately absent — a Wayback mirror is a fallback for a dead link, not
+ * something to send a reader to while the original resolves.
+ */
+const LINK_PRIORITY = ["video", "slides", "code", "paper", "advisory"] as const;
+
+/**
+ * The row's own artifact, or nothing. Falls through to `source` inside
+ * IndexPlate, which for most works is a shared conference index page rather
+ * than anything about this particular entry.
+ */
+function primaryLink(links?: Record<string, string | undefined>) {
+  if (!links) return undefined;
+  for (const kind of LINK_PRIORITY) {
+    const href = links[kind];
+    if (href) return { href, kind: kind as LinkKind };
+  }
+  return undefined;
+}
 
 // Newest first, then alphabetical — an archive reads reverse-chronologically.
 const sorted = works
@@ -106,6 +128,9 @@ const description =
               ]
                 .filter(Boolean)
                 .join(" · ")}
+              description={work.entry.data.abstract}
+              source={work.entry.data.source}
+              link={primaryLink(work.entry.data.links)}
               figure={String(work.entry.data.year)}
               figureLabel={WORK_TYPE_LABELS[work.entry.data.type] ?? work.entry.data.type}
               filterData={{

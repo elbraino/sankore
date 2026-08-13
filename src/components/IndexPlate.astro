@@ -6,12 +6,61 @@
  * as the only link, and metadata beneath. Filter state is driven by data-*
  * attributes so the filter island can hide rows without re-rendering anything.
  */
+export type LinkKind = "video" | "slides" | "code" | "paper" | "advisory" | "source";
+
+/**
+ * A bare hostname does not say what is on the other end — youtube.com could be
+ * the talk or the con's channel. Each kind is named so the row states what it
+ * is offering, in the mono face the design reserves for metadata.
+ */
+const LINK_LABEL: Record<LinkKind, string> = {
+  video: "recording",
+  slides: "slides",
+  code: "code",
+  paper: "paper",
+  advisory: "advisory",
+  source: "source",
+};
+
+/** Screen readers get the entry name, since a list of hostnames is unusable. */
+const LINK_ARIA: Record<LinkKind, (title: string, host: string) => string> = {
+  video: (t, h) => `Recording of ${t}, at ${h}`,
+  slides: (t, h) => `Slides for ${t}, at ${h}`,
+  code: (t, h) => `Code for ${t}, at ${h}`,
+  paper: (t, h) => `Paper for ${t}, at ${h}`,
+  advisory: (t, h) => `Advisory for ${t}, at ${h}`,
+  source: (t, h) => `Original source for ${t}, at ${h}`,
+};
+
 interface Props {
   plate: string;
   href: string;
   title: string;
   /** Rendered under the title: authors, venue, kind — already humanised. */
   meta?: string;
+  /**
+   * Abstract or summary, clamped to two lines. Rows without one simply omit it
+   * rather than rendering an empty-state — most of the archive has no abstract
+   * yet, and 50 "no description recorded" lines would be noise, not information.
+   */
+  description?: string;
+  /**
+   * Provenance: the public page this entry was recorded from. Rendered as a
+   * secondary outbound link so a reader can check the row against its origin
+   * without opening the detail page.
+   *
+   * Used only as a fallback when `link` is absent. Provenance is frequently a
+   * shared index page — 37 BSides works record the same conference archive URL
+   * — so a row that has something better to offer offers that instead, and the
+   * detail page keeps the provenance either way.
+   */
+  source?: string;
+  /**
+   * The entry's own artifact: the recording, the deck, the repo. Preferred over
+   * `source` because it resolves to *this* work rather than to the page that
+   * lists it, which is what a reader clicking a row is after.
+   */
+  link?: { href: string; kind: LinkKind };
   /** Right-aligned mono figure, e.g. a year or a works count. */
   figure?: string;
   /** Small text under the figure, e.g. "works". */
@@ -22,12 +71,45 @@ interface Props {
   class?: string;
 }
 
-const { plate, href, title, meta, figure, figureLabel, filterData = {}, class: className } =
-  Astro.props;
+const {
+  plate,
+  href,
+  title,
+  meta,
+  description,
+  source,
+  link,
+  figure,
+  figureLabel,
+  filterData = {},
+  class: className,
+} = Astro.props;
 
 const dataAttrs = Object.fromEntries(
   Object.entries(filterData).map(([key, value]) => [`data-${key}`, value]),
 );
+
+/**
+ * One outbound link per row: the entry's own artifact when there is one, the
+ * page it was recorded from otherwise. Two links would double the visual weight
+ * of every row for a gain the detail page already provides.
+ */
+const outbound: { href: string; kind: LinkKind } | undefined =
+  link ?? (source ? { href: source, kind: "source" } : undefined);
+
+/**
+ * Bare hostname — the whole URL would swamp a row, and the host is what tells a
+ * reader whether the link is the conference itself, a repo, or a mirror.
+ * Malformed URLs degrade to no link at all rather than throwing the build.
+ */
+let outboundHost: string | undefined;
+if (outbound) {
+  try {
+    outboundHost = new URL(outbound.href).hostname.replace(/^www\./, "");
+  } catch {
+    outboundHost = undefined;
+  }
+}
 ---
 
 <li class:list={["plate-row", className]} {...dataAttrs}>
@@ -36,6 +118,21 @@ const dataAttrs = Object.fromEntries(
   <span class="plate-row-body">
     <a class="plate-row-title" href={href}>{title}</a>
     {meta && <span class="plate-row-meta">{meta}</span>}
+    {description && <span class="plate-row-desc">{description}</span>}
+    {
+      outbound && outboundHost && (
+        <a
+          class="plate-row-source"
+          href={outbound.href}
+          rel="noopener external"
+          aria-label={LINK_ARIA[outbound.kind](title, outboundHost)}
+        >
+          <span aria-hidden="true">↗</span>
+          <span class="plate-row-source-kind">{LINK_LABEL[outbound.kind]}</span>
+          <span class="plate-row-source-host">{outboundHost}</span>
+        </a>
+      )
+    }
     <slot />
   </span>
 
@@ -95,6 +192,58 @@ const dataAttrs = Object.fromEntries(
   .plate-row-meta {
     font-size: var(--text-sm);
     color: var(--ink-muted);
+  }
+
+  /* Two lines: enough to tell a reader what the work is, not enough to turn the
+     index plate into a feed of paragraphs. `--measure` keeps the line length
+     readable on wide screens without a magic pixel width. */
+  .plate-row-desc {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    max-inline-size: var(--measure);
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+    color: var(--ink-muted);
+  }
+
+  .plate-row-source {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.3em;
+    align-self: start;
+    max-inline-size: 100%;
+    font-family: var(--face-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-faint);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+
+  /* Names what the link is. Slightly stronger than the host beside it: the kind
+     is the useful half, the host is corroboration. */
+  .plate-row-source-kind {
+    letter-spacing: var(--tracking-plate);
+    color: var(--ink-muted);
+  }
+
+  .plate-row-source-host::before {
+    content: "·";
+    margin-inline-end: 0.3em;
+    color: var(--rule);
+  }
+
+  .plate-row-source:hover {
+    color: var(--action-hover);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  /* The kind sets its own colour, so it needs telling to follow the hover. */
+  .plate-row-source:hover .plate-row-source-kind {
+    color: inherit;
   }
 
   .plate-row-figure {

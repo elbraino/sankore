@@ -1,4 +1,9 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
+# abstract VERIFIED 2026-08-12 — quoted verbatim from the talk's own recording
+# description on the BSides Cape Town YouTube channel. Boilerplate prefixes
+# ("Title:"/"Abstract:") and any speaker-bio or social-handle trailer are
+# stripped, per CLAUDE.md: no auto-imported personal data. Nothing paraphrased.
 slug: outsmarting-cyber-villains-2023
 title: "Outsmarting cyber villains on a shoestring budget"
 type: talk
@@ -6,4 +11,17 @@ year: 2023
 authors: [roshan-harneker]
 event: bsides-cape-town
 language: en
+abstract: >-
+  This presentation covers the most common cyber threats affecting South
+  Africa and how to combat them by building your own cyber threat intelligence
+  platform on a budget. This presentation focuses on practical steps to help
+  you get started with building your own cyber threat intel programme for your
+  organisation - importantly - on a budget! The start of the presentation
+  looks at the cybercrime crisis we face in SA and includes stats and info
+  about the most prevalent threats noted and the "why" behind why these
+  malicious acts are carried out. The next slides discuss strategies to combat
+  the threats mentioned.
+source: https://bsidescapetown.co.za/about-us/past-events/
+links:
+  video: https://www.youtube.com/watch?v=Lb1mxAPvSd8
 added: 2026-08-10

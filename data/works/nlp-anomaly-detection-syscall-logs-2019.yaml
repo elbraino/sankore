@@ -1,4 +1,9 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
+# abstract VERIFIED 2026-08-12 — quoted verbatim from the talk's own recording
+# description on the BSides Cape Town YouTube channel. Boilerplate prefixes
+# ("Title:"/"Abstract:") and any speaker-bio or social-handle trailer are
+# stripped, per CLAUDE.md: no auto-imported personal data. Nothing paraphrased.
 slug: nlp-anomaly-detection-syscall-logs-2019
 title: "Natural Language Processing & Anomaly detection in Sys call logs"
 type: talk
@@ -6,4 +11,18 @@ year: 2019
 authors: [christo-goosen]
 event: bsides-cape-town
 language: en
+abstract: >-
+  Containers (lightweight application virtualization) provide further
+  isolation for application's, but the container daemon and management
+  systems, ads more attack surface. The research problem is that despite
+  segmentation and system call hardening, containers are still vulnerable and
+  the host and other containers can be affected. In this paper, the use of
+  syscall (system calls, calls to kernel) logging in Linux x86_64 systems is
+  investigated with Natural Language Processing. Logs are tokenized and
+  hashed, then transformed into a sparse matrix encoding. The purpose of the
+  method is to classify the documents and test the different accuracies of
+  different classifiers, such as Random Forest, K Nearest Neighbor, etc.
+source: https://bsidescapetown.co.za/about-us/past-events/
+links:
+  video: https://www.youtube.com/watch?v=dopKs6OwqUo
 added: 2026-08-10

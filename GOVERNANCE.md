@@ -40,6 +40,9 @@ Any person may request, with no justification required:
 Requests are honored within 7 days. Contact: <maintainers email> or a GitHub
 issue with the `takedown` label (issue may be filed anonymously).
 
+## Data integrity
+Slugs are immutable after public launch; pre-launch corrections are permitted.
+
 ## Safety
 We recognize that in parts of the covered region, public association with
 offensive security research can carry legal or personal risk. Therefore:

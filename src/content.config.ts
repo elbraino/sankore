@@ -118,6 +118,14 @@ const works = defineCollection({
       abstract: z.string().max(1200).optional(),
       language: language.optional(),
       cve_ids: z.array(z.string().regex(/^CVE-\d{4}-\d{4,}$/)).optional(),
+      /**
+       * The page this entry was recorded FROM — provenance, not the work.
+       * `links` point at the work itself (watch it, read it, run it); `source`
+       * points at the agenda/speaker/repo page that establishes it exists, so
+       * a reader can check the index against its origin. This is the `# Source:`
+       * comment convention promoted into data.
+       */
+      source: z.url().optional(),
       links: z
         .object({
           video: z.url().optional(),

@@ -1,4 +1,5 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
 slug: smart-watch-lobotomy-2022
 title: "Smart Watch Lobotomy"
 type: talk
@@ -6,4 +7,7 @@ year: 2022
 authors: [dale-nunns]
 event: bsides-cape-town
 language: en
+source: https://bsidescapetown.co.za/about-us/past-events/
+links:
+  video: https://www.youtube.com/watch?v=JC8W6sO9pOo
 added: 2026-08-10

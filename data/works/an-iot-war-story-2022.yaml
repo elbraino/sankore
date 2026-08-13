@@ -1,4 +1,5 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
 slug: an-iot-war-story-2022
 title: "An IOT War Story"
 type: talk
@@ -6,4 +7,8 @@ year: 2022
 authors: [jason-spencer]
 event: bsides-cape-town
 language: en
+source: https://bsidescapetown.co.za/about-us/past-events/
+links:
+  video: https://www.youtube.com/watch?v=Q-7H_LpgTMM
+  archive: https://web.archive.org/web/20260812131804/https://www.youtube.com/watch?v=Q-7H_LpgTMM
 added: 2026-08-10

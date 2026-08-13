@@ -1,4 +1,9 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
+# abstract VERIFIED 2026-08-10 — opening paragraph quoted verbatim from the
+# talk's own recording description, youtube.com/watch?v=DvLft7qeUuo. The rest of
+# that description is a bulleted roadmap rather than an abstract, so it is not
+# imported; nothing here is paraphrased.
 slug: hack-south-2023
 title: "Hack South: Home of the ubiquitous South"
 type: talk
@@ -6,6 +11,11 @@ year: 2023
 authors: [charles-wroth]
 event: bsides-cape-town
 language: en
+abstract: >-
+  Hack South has become a staple of the ZA Hacker community. Hack South has come
+  a long way since lockdown, but what does the future hold, and where can you get
+  involved?
+source: https://bsidescapetown.co.za/about-us/past-events/
 links:
   video: https://www.youtube.com/watch?v=DvLft7qeUuo
 added: 2026-08-10

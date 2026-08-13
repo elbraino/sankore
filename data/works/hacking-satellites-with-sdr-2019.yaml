@@ -1,4 +1,9 @@
 # Source: bsidescapetown.co.za/about-us/past-events/
+#         archived: https://web.archive.org/web/20260812132246/https://bsidescapetown.co.za/about-us/past-events/
+# abstract VERIFIED 2026-08-12 — quoted verbatim from the talk's own recording
+# description on the BSides Cape Town YouTube channel. Boilerplate prefixes
+# ("Title:"/"Abstract:") and any speaker-bio or social-handle trailer are
+# stripped, per CLAUDE.md: no auto-imported personal data. Nothing paraphrased.
 slug: hacking-satellites-with-sdr-2019
 title: "Hacking satellites with Software Defined Radio (SDR)"
 type: talk
@@ -6,4 +11,14 @@ year: 2019
 authors: [gerard-de-jong]
 event: bsides-cape-town
 language: en
+abstract: >-
+  In this no holds barred down introduction to Software Defined Radio (SDR)
+  you'll learn how you can write software to hack remote control security
+  gates, track ships at sea, code your own aircraft radar, and ultimately how
+  to download data directly from various satellites in low earth orbit with
+  nothing more than a cheap USB dongle and a makeshift antenna.
+source: https://bsidescapetown.co.za/about-us/past-events/
+links:
+  video: https://www.youtube.com/watch?v=gMwciWchH3Q
+  archive: https://web.archive.org/web/20260621024724/https://www.youtube.com/watch?v=gMwciWchH3Q
 added: 2026-08-10
