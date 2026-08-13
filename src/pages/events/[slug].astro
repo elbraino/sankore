@@ -41,7 +41,8 @@ const description =
 
       <p class="event-where">
         {[data.city, countryName(data.country)].filter(Boolean).join(", ")}
-        {data.first_year && <span> · running since {data.first_year}</span>}
+        {/* Floor, not founding year — see the note in events/index.astro. */}
+        {data.first_year && <span> · first documented {data.first_year}</span>}
       </p>
 
       {data.description && <p class="prose event-desc">{data.description}</p>}

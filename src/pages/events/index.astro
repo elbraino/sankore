@@ -114,8 +114,14 @@ const description =
 
                 <p class="event-where">
                   {[event.entry.data.city, countryName(event.country)].filter(Boolean).join(", ")}
+                  {/*
+                    "first documented", not "since": first_year records the
+                    earliest edition this index can evidence, which is a floor.
+                    Several entries have a founding year the sources place
+                    earlier or leave vague, so "since" would overstate them.
+                  */}
                   {event.entry.data.first_year && (
-                    <span class="event-since"> · since {event.entry.data.first_year}</span>
+                    <span class="event-since"> · first documented {event.entry.data.first_year}</span>
                   )}
                 </p>
 
