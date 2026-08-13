@@ -1,0 +1,23 @@
+# Source: blackhatmea.com/speaker/adel-alzubeir
+# Black Hat MEA 2025, Riyadh, 2-4 December 2025.
+#
+# INCLUSION EVIDENCE (recorded because both criteria were applied mechanically,
+# not by judgment about anybody's name):
+#   criterion 2 -- the speaker's own listing on the conference site states the
+#     affiliation "Founder & General Manager, Leira Arabia".
+#     Nothing here is inferred from the speaker's name.
+#   criterion 3 -- the session's own format field on that page reads
+#     "Presentation", not "Panel", "Podcast" or "Fireside Chat".
+#
+# No abstract: Black Hat MEA renders its agenda through a third-party embed, so
+# no abstract, recording, or slide deck is published as retrievable HTML. The
+# entry is deliberately thin rather than padded.
+slug: overlooked-and-overridden-2025
+title: "Overlooked & Overridden: Mitigating Risks from Unlocked Sessions to Unmanaged Local Assets"
+type: talk
+year: 2025
+authors: [adel-alzubeir]
+event: black-hat-mea
+language: en
+source: https://blackhatmea.com/speaker/adel-alzubeir
+added: 2026-08-13

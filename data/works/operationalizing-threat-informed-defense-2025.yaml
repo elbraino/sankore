@@ -1,0 +1,27 @@
+# Source: blackhatmea.com/speaker/sivaraman-girisan
+# Black Hat MEA 2025, Riyadh, 2-4 December 2025.
+#
+# INCLUSION EVIDENCE (recorded because both criteria were applied mechanically,
+# not by judgment about anybody's name):
+#   criterion 2 -- the speaker's own listing on the conference site states the
+#     affiliation "Security Architect, Abu Dhabi Airports".
+#     Nothing here is inferred from the speaker's name.
+#   criterion 3 -- the session's own format field on that page reads
+#     "Presentation", not "Panel", "Podcast" or "Fireside Chat".
+#
+# No abstract: Black Hat MEA renders its agenda through a third-party embed, so
+# no abstract, recording, or slide deck is published as retrievable HTML. The
+# entry is deliberately thin rather than padded.
+# BORDERLINE under GOVERNANCE.md criterion 3: this is security-architecture
+# practice rather than new research or a released tool. Kept because the
+# subject is technical defensive engineering, but it is the weakest technical
+# claim in this batch and a maintainer may reasonably drop it.
+slug: operationalizing-threat-informed-defense-2025
+title: "Operationalizing Threat Informed Defense: A Security Architect's Perspective"
+type: talk
+year: 2025
+authors: [sivaraman-girisan]
+event: black-hat-mea
+language: en
+source: https://blackhatmea.com/speaker/sivaraman-girisan
+added: 2026-08-13

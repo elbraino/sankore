@@ -1,0 +1,23 @@
+# Source: blackhatmea.com/speaker/bushra-alhetelah
+# Black Hat MEA 2025, Riyadh, 2-4 December 2025.
+#
+# INCLUSION EVIDENCE (recorded because both criteria were applied mechanically,
+# not by judgment about anybody's name):
+#   criterion 2 -- the speaker's own listing on the conference site states the
+#     affiliation "Threat Content Specialist, Cyberani by Aramco Digital".
+#     Nothing here is inferred from the speaker's name.
+#   criterion 3 -- the session's own format field on that page reads
+#     "Presentation", not "Panel", "Podcast" or "Fireside Chat".
+#
+# No abstract: Black Hat MEA renders its agenda through a third-party embed, so
+# no abstract, recording, or slide deck is published as retrievable HTML. The
+# entry is deliberately thin rather than padded.
+slug: moving-target-defence-2025
+title: "Moving Target Defence: Playing Around with Attackers"
+type: talk
+year: 2025
+authors: [bushra-alhetelah]
+event: black-hat-mea
+language: en
+source: https://blackhatmea.com/speaker/bushra-alhetelah
+added: 2026-08-13
