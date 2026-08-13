@@ -1,0 +1,27 @@
+# Source: blackhatmea.com/speaker/laith-samara-0
+# Black Hat MEA 2025, Riyadh, 2-4 December 2025.
+#
+# INCLUSION EVIDENCE (recorded because both criteria were applied mechanically,
+# not by judgment about anybody's name):
+#   criterion 2 -- the speaker's own listing on the conference site states the
+#     affiliation "Presales Lead Saudi Arabia & Turkiye, Group-IB".
+#     Nothing here is inferred from the speaker's name.
+#   criterion 3 -- the session's own format field on that page reads
+#     "Presentation", not "Panel", "Podcast" or "Fireside Chat".
+#
+# No abstract: Black Hat MEA renders its agenda through a third-party embed, so
+# no abstract, recording, or slide deck is published as retrievable HTML. The
+# entry is deliberately thin rather than padded.
+# BORDERLINE under GOVERNANCE.md criterion 3: the subject matter is technical
+# (session hijack kits, deepfake fraud) but the speaker's stated role is
+# presales, and with no abstract published there is no way to confirm this is
+# research rather than a vendor threat-landscape talk. Flagged, not hidden.
+slug: the-imposter-factory-2025
+title: "The Imposter Factory: When Your Digital Identity Stops Being Yours - Deepfakes, Session Hijack Kits, and Fraud at Scale"
+type: talk
+year: 2025
+authors: [laith-samara]
+event: black-hat-mea
+language: en
+source: https://blackhatmea.com/speaker/laith-samara-0
+added: 2026-08-13

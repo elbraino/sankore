@@ -1,0 +1,48 @@
+# Source: DEF CON's official YouTube channel, youtube.com/@DEFCONConference
+# abstract VERIFIED 2026-08-13 — quoted verbatim from the talk's own recording
+# description. The final paragraph of that description is omitted only because
+# the abstract field caps at 1200 characters; nothing is paraphrased or added.
+#
+# WHY THIS ENTRY EXISTS AND OTHER DEF CON TALKS DO NOT.
+# defcon.org and media.defcon.org publish a robots.txt naming ClaudeBot,
+# Claude-Web and anthropic-ai followed by "Disallow: /", so their site was not
+# crawled and was not read out of an archive cache either. DEF CON's own YouTube
+# channel is a separate platform they publish to deliberately, and carries no
+# such directive, so the recording was read there.
+#
+# That still cannot produce a DEF CON sweep. Sampling sixteen DEF CON 33/34
+# descriptions found ZERO containing a bio, employer, university, CERT or
+# location — DEF CON publishes an abstract and a speaker name and nothing else.
+# Selecting regional speakers from that would mean inferring origin from names,
+# which GOVERNANCE.md criterion 2 forbids. So the search was inverted: the 67
+# people ALREADY indexed here were matched against DEF CON 32/33/34 titles, and
+# this was the single hit.
+#
+# Note the limit of that: Leon Jacobs' place in this index rests on his BSides
+# Cape Town appearance, which is a venue proxy rather than a stated affiliation.
+# This entry inherits that basis and does not strengthen it.
+#
+# No `event`: DEF CON is not a regional conference, and data/events/ is
+# deliberately the con landscape of the covered region. Recording it there would
+# dilute that. The venue is DEF CON 33, Las Vegas, August 2025.
+slug: 7-vulns-in-7-days-2025
+title: "7 Vulns in 7 Days: Breaking Bloatware Faster Than It's Built"
+type: talk
+year: 2025
+authors: [leon-jacobs]
+language: en
+abstract: >-
+  Bloatware. We all hate it, and most of us are good at avoiding it. But some
+  vendor tools – especially those managing critical drivers – can be useful when
+  the Windows Update versions aren't good enough for performance-critical
+  computing. What started as a routine driver update took a sharp turn when I
+  confirmed a reboot modal… from my browser. Wait, my browser shouldn't be able
+  to do that!? To my disappointment (and maybe some surprise), it turned out to
+  be arbitrary code execution – right from the browser. This kicked off a
+  week-long deep dive, uncovering seven CVEs in seven days across several
+  prominent vendors, all exploiting a common pattern: privileged services
+  managing software on Windows with little regard for security.
+source: https://www.youtube.com/@DEFCONConference
+links:
+  video: https://www.youtube.com/watch?v=zSBf2CMKlBk
+added: 2026-08-13
