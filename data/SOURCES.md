@@ -29,6 +29,47 @@ YAML file carries a `# Source:` comment naming which one.
 | `bsidescapetown.co.za/about-us/past-events/` | 37 works, 2012–2024 |
 | BSides Cape Town talk videos on YouTube | Per-talk source URLs, recorded in `links.video` |
 
+## Swept and returned nothing — do not repeat without a new method
+
+A zero-yield sweep is worth recording. Without this, the next person re-runs the
+same search, gets the same nothing, and cannot tell whether the source is barren
+or was never tried.
+
+| Source | Swept | Result |
+|---|---|---|
+| `blackhat.com/us-26/briefings/schedule/` (Black Hat USA 2026) | 2026-08-14 | **0 of 230 speakers** state a regional affiliation. The schedule's own `sessions.json` carries `company`, `title` and full `bio` per speaker — good data, no regional rooting in any of it. All 123 distinct employers are US/EU/Israel/Korea/Taiwan/India. The 13 speakers with no employer have substantive bios; none names the region. |
+| DEF CON 34 talks (official YouTube channel) | 2026-08-14 | **Not published yet.** All 14 DC34 uploads are Video Team B-roll, no Briefings. DEF CON posts talks weeks-to-months after the event; recheck later. |
+| `media.defcon.org/DEF CON 34/` — workshops directory | 2026-08-14 | 22 workshop entries, **0 match** the roster. Listing fetched by a maintainer, not by an agent (see note below). |
+| `media.defcon.org/DEF CON 34/` — presentations directory | 2026-08-14 | **Empty.** The directory lists only itself; DC34 Briefings materials were not uploaded yet. This is the one to recheck. |
+| DEF CON 32/33 talks vs. this index's roster | 2026-08-13 | **1 hit** — Leon Jacobs, already indexed, now carrying `7-vulns-in-7-days-2025`. |
+
+Two findings that constrain any future DEF CON or Black Hat USA pass:
+
+- **DEF CON publishes no affiliations.** Sixteen DC33/34 video descriptions were
+  sampled and none contained a bio, employer, university, CERT, or location —
+  abstract and speaker name only, which fits a conference built on handles. There
+  is therefore no way to select regional speakers from DEF CON without inferring
+  origin from names, which rule 1 above forbids. The only sound method is the
+  **inversion**: match people already indexed here, whose rooting is already
+  evidenced, against DEF CON titles. Re-run it whenever the roster grows; it is
+  cheap and it is the only thing that will ever yield.
+  `scripts/defcon_inversion.py` implements it and carries a self-test pinning
+  two matching bugs that each produced a confident wrong answer — mononyms
+  being unmatchable, and a dropped short first name collapsing "JP Smith" into
+  a match on an unrelated Smith.
+- **`media.defcon.org` and `defcon.org` must not be crawled by an agent.** Both
+  publish a robots.txt naming `ClaudeBot`, `Claude-Web` and `anthropic-ai`
+  followed by `Disallow: /`. The listings above were fetched by a maintainer in
+  their own shell and handed to the tooling, which is a different act from an
+  agent crawling the host. Keep it that way: the script takes saved HTML and
+  fetches nothing itself.
+- **Black Hat USA has excellent affiliation data and no regional speakers.** The
+  `sessions.json` feed makes this sweep fast and reliable, so it is worth
+  repeating each year — but expect zero, and do not soften the criterion to
+  manufacture a result. One 2026 bio mentioned "Black Hat MEA (UAE)" and "BSides
+  Dubai" purely as venues the speaker had presented at; that is a speaking
+  history, not regional rooting, and it was rejected.
+
 ## Verified event metadata only (no talk-level data yet)
 
 `arabsecurityconference.com` (agenda is JS-rendered), `blackhatmea.com`,
