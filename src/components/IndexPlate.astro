@@ -148,6 +148,8 @@ if (outbound) {
 
 <style>
   .plate-row {
+    --stripe: linear-gradient(to right, transparent, rgb(16 24 35 / 2.5%) 12%, transparent);
+
     display: grid;
     grid-template-columns: 4.5rem 1fr auto;
     align-items: baseline;
@@ -156,9 +158,37 @@ if (outbound) {
     border-block-start: var(--hairline) solid var(--rule);
   }
 
+  /*
+   * REQUIRED, not defensive. The filter island hides rows by setting the
+   * `hidden` property, which relies on the user-agent rule
+   * `[hidden] { display: none }` — and author styles beat the UA sheet, so the
+   * `display: grid` above silently overrode it and every filtered-out row kept
+   * painting. The filter counted correctly and the list never changed.
+   * Deleting this rule re-breaks filtering on /works/ and /people/.
+   */
+  .plate-row[hidden] {
+    display: none;
+  }
+
   /* Zebra striping reads as an index plate rather than a table. */
   .plate-row:nth-child(even) {
-    background: linear-gradient(to right, transparent, rgb(16 24 35 / 2.5%) 12%, transparent);
+    background: var(--stripe);
+  }
+
+  /*
+   * Once rows are hidden, DOM position stops matching visible position and the
+   * stripes bunch up. Where the browser can select on visible position, stripe
+   * by that instead. Browsers without support keep the DOM-position stripes,
+   * which are only ever wrong while a filter is active.
+   */
+  @supports selector(:nth-child(even of :not([hidden]))) {
+    .plate-row:nth-child(even) {
+      background: none;
+    }
+
+    .plate-row:nth-child(even of :not([hidden])) {
+      background: var(--stripe);
+    }
   }
 
   .plate-row-ref {
