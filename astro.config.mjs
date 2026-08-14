@@ -17,6 +17,36 @@ export default defineConfig({
   // Matches the /people/, /works/, /events/ URL scheme in CLAUDE.md.
   trailingSlash: "always",
 
+  // SET DELIBERATELY — do not delete this line, and read before changing it.
+  //
+  // Leaving it out shipped prose with the space missing before inline elements.
+  // Ordinary, correct authoring:
+  //
+  //     Requests are honoured within 7 days, without debate.
+  //     <a href={ISSUES_URL}>Open a takedown request</a> — it is pre-labelled.
+  //
+  // reached readers as "without debate.Open a takedown request". There were 186
+  // such joins across every page, including the About page's consent and
+  // removal sections — the last copy on the site that should look careless.
+  //
+  // Measured across the whole site, same source, three configurations:
+  //
+  //     omitted (the default)   raw 3,134,852   gz 112,292   BROKEN
+  //     compressHTML: true      raw 3,177,733   gz 116,944   correct
+  //     compressHTML: false     raw 3,439,614   gz 120,327   correct
+  //
+  // Note the first two rows. Omitting the option is documented as equivalent to
+  // `true`, and it is not: only the explicit value preserves the whitespace. I
+  // could not determine why, and `false` is chosen over `true` for that reason
+  // — not for output size, which `true` wins by 3.4KB. Depending on an
+  // undiagnosed difference between a default and its explicit equivalent is how
+  // this returns silently after an Astro upgrade. `false` means what it says.
+  //
+  // The cost is ~8KB gzipped across every page on the site, for prose that
+  // reads correctly. `scripts/check_spacing.py` runs in postbuild and fails the
+  // build if the joins come back, so a future change here cannot pass unnoticed.
+  compressHTML: false,
+
   // Fonts are downloaded at BUILD time and served from our own origin.
   // Deliberate: visitors to a security-research index in this region should
   // not have their IP handed to a third-party font CDN on every page view.
